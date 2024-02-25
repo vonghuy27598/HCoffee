@@ -14,5 +14,14 @@
     "target": "esnext",
     "module": "esnext",
     "baseUrl": ".",
+     "paths": {
+       "@components/*": ["src/components/*"],
+       "@container/*":["src/container/*"],
+       "@common/*":["src/common/*"],
+       "@config/*":["src/config/*"],
+       "@constant/*":["src/constant/*"],
+       "@navigator/*":["src/navigator/*"],
+       "@redux/*":["src/redux/*"],
+     },
   },
 }

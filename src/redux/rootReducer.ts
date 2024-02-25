@@ -1,8 +1,20 @@
 import {combineReducers} from 'redux';
 import {getCategoryMenuReducer} from './reducer/categoryMenuReducer';
 
-const rootReducer = combineReducers({
+const appReducer = combineReducers({
   getCategoryMenuReducer,
 });
 
-export default ({state, action}: any) => rootReducer(state, action);
+const rootReducer = (state: any, action: any) => {
+  // when a logout action is dispatched it will reset redux state
+  switch (action.type) {
+    case 'RESET_ALL':
+      break;
+    default:
+      break;
+  }
+
+  return appReducer(state, action);
+};
+
+export {rootReducer};
