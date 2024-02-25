@@ -1,10 +1,11 @@
 import React, {useRef} from 'react';
-import {ScrollView, Animated, SafeAreaView} from 'react-native';
+import {ScrollView, Animated, SafeAreaView, View} from 'react-native';
 import {styles} from './styles';
 import HeaderHome from '../components/Header/HeaderHome';
 import RewardHome from '../components/RewardHome';
 import PaddingHeader from '../components/PaddingHeader';
 import LinearGradient from 'react-native-linear-gradient';
+import CategoryMenu from '../components/CategoryMenu';
 const HomeScreen = () => {
   const animHeader = useRef(new Animated.Value(0)).current;
   const animHeaderBG = useRef(new Animated.Value(0)).current;
@@ -90,6 +91,9 @@ const HomeScreen = () => {
           style={styles.container}>
           <RewardHome />
         </LinearGradient>
+        <View style={styles.container}>
+          <CategoryMenu />
+        </View>
       </ScrollView>
     </SafeAreaView>
   );

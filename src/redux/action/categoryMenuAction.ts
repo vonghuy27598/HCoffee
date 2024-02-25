@@ -1,15 +1,26 @@
 import {Helper} from '../../common';
-import {constantsURL, fetchAPI} from '../../config/api';
+import {constantsURL} from '../../config/api';
 import {AppDispatch} from '../store';
 import {typeCategoryMenu} from '../constants/typeCategoryMenuAction';
-const getCategoryMenu = () => {
+import {fetchAPI, IFetchAPI} from '../../config/api/fetchAPI';
+
+export const getCategoryMenu = () => {
   return async (dispatch: AppDispatch) => {
-    const response = fetchAPI(constantsURL.GET_CATEGORY_MENU);
-    if (!Helper.isNullOrUndefined(response)) {
-      console.log(response);
-      dispatch(
-        Helper.createAction(typeCategoryMenu.GET_CATEGORY_MENU, response),
-      );
+    try {
+      const paramsAPI: IFetchAPI = {
+        url: constantsURL.GET_CATEGORY_MENU,
+      };
+      const response = await fetchAPI(paramsAPI);
+      console.log('CALL APIACTION', response);
+
+      if (!Helper.isNullOrUndefined(response)) {
+        console.log(response);
+        dispatch(
+          Helper.createAction(typeCategoryMenu.GET_CATEGORY_MENU, response),
+        );
+      }
+    } catch (error) {
+      console.log('ERROR ACTION', error);
     }
   };
 };

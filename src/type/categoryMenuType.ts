@@ -1,9 +1,11 @@
-export interface ICategoryMenu {
-  data: {
-    CateMenuId: number;
-    CateMenuName: string;
-    DetailCate: string;
-    ImageCate: string;
-  };
+export interface IListCategoryMenu {
+  data: ICategoryMenu[];
   isLoading: boolean;
+}
+
+export interface ICategoryMenu {
+  cateMenuId: number;
+  cateMenuName: string;
+  detailCate: string;
+  imageCate: string;
 }

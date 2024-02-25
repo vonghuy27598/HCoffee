@@ -1,10 +1,9 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {CONSTANTS_STORAGE} from '../../constants';
-import {GET_ALL_PRODUCT} from './constants';
 type Method = 'PUT' | 'POST' | 'DELETE' | 'GET';
-interface IFetchAPI {
+export interface IFetchAPI {
   url: string;
-  request: {
+  request?: {
     method: Method;
     header?: Headers;
     body?: object;
@@ -23,11 +22,19 @@ export const fetchAPI = ({url, request}: IFetchAPI) => {
           if (errors) {
             reject('Error');
           }
-          await fetch(url).then(async res => {
-            const response = await res.json();
-            console.log('RESSSS', response);
-            resolve(response);
-          });
+          console.log('API REQUEST:', url);
+
+          await fetch(url)
+            .then(async res => {
+              const response = await res.json();
+              console.log('API RESPONSE', response);
+              console.log('API RESPONSE URL', url);
+              resolve(response);
+            })
+            .catch(errors => {
+              console.log('ERROR REQUEST API', url, errors);
+              reject('ERROR REQUEST API');
+            });
         },
       );
     },

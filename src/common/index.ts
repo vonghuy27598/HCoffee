@@ -1,3 +1,4 @@
+import * as Dimensions from './dimensions';
 import * as Helper from './helper';
 
-export {Helper};
+export {Helper, Dimensions};

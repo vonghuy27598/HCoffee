@@ -18,13 +18,6 @@ const AnimatedTextInput = Animated.createAnimatedComponent(TextInput);
 const AnimatedTouchableOpacity = Animated.createAnimatedComponent(TextInput);
 
 const HeaderHome = ({animateScroll, searchBoxAnim, searchInputAnim}: any) => {
-  useEffect(() => {
-    getAPI();
-  }, []);
-
-  const getAPI = async () => {
-    console.log('SN', await fetchAPI('ASDASD'));
-  };
   return (
     <Animated.View
       style={[styles.container, styles.flexRowDicrection, animateScroll]}>
