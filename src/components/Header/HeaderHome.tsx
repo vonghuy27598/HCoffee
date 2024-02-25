@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {
   View,
   Text,
@@ -11,12 +11,20 @@ import {
 import Icon from 'react-native-vector-icons/Ionicons';
 import {styles} from './styles';
 import {PRIMARY_COLOR} from '../../constants/colors';
+import {fetchAPI} from '../../config/api/fetchAPI';
+
 const AnimatedStatusBar = Animated.createAnimatedComponent(StatusBar);
 const AnimatedTextInput = Animated.createAnimatedComponent(TextInput);
 const AnimatedTouchableOpacity = Animated.createAnimatedComponent(TextInput);
-const HeaderHome = ({animateScroll, searchBoxAnim, searchInputAnim}: any) => {
-  console.log('searchBoxAnim', searchBoxAnim);
 
+const HeaderHome = ({animateScroll, searchBoxAnim, searchInputAnim}: any) => {
+  useEffect(() => {
+    getAPI();
+  }, []);
+
+  const getAPI = async () => {
+    console.log('SN', await fetchAPI('ASDASD'));
+  };
   return (
     <Animated.View
       style={[styles.container, styles.flexRowDicrection, animateScroll]}>

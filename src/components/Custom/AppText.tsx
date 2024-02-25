@@ -1,12 +1,6 @@
 import React from 'react';
-import {
-  GestureResponderEvent,
-  StyleProp,
-  StyleSheet,
-  Text,
-  TextStyle,
-} from 'react-native';
-import {TEXT_COLOR_BLACK} from '../../constants/colors';
+import {GestureResponderEvent, StyleProp, Text, TextStyle} from 'react-native';
+import {COLORS} from '../../constants';
 import {fontFamily} from '../../constants/fonts';
 
 interface styleText {
@@ -52,7 +46,7 @@ const AppText = (props: styleText) => {
     <Text
       style={[
         {
-          color: TEXT_COLOR_BLACK,
+          color: COLORS.TEXT_COLOR_BLACK,
           fontSize: 14,
           includeFontPadding: false,
           fontFamily: defaultFont(

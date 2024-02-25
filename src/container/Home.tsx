@@ -1,12 +1,5 @@
-import React, {useEffect, useRef} from 'react';
-import {
-  ScrollView,
-  Animated,
-  SafeAreaView,
-  Easing,
-  TouchableOpacity,
-  Text,
-} from 'react-native';
+import React, {useRef} from 'react';
+import {ScrollView, Animated, SafeAreaView} from 'react-native';
 import {styles} from './styles';
 import HeaderHome from '../components/Header/HeaderHome';
 import RewardHome from '../components/RewardHome';
@@ -65,8 +58,6 @@ const HomeScreen = () => {
           lastOffsetY.current = offsetY;
           animHeaderBG.setValue(offsetY);
           animHeader.setValue(offsetY);
-          // if (!changeScroll.current) animHeader.setValue(offsetY);
-          // changeScroll.current = true;
         }}
         onScrollEndDrag={e => {
           console.log('scrollDirection', scrollDirection.current);
@@ -81,24 +72,6 @@ const HomeScreen = () => {
           ) {
             scrollRef.current?.scrollTo({y: 0, animated: true});
           }
-          // if (scrollDirection.current === 'down') {
-          //   console.log('down');
-
-          //   Animated.timing(animHeader, {
-          //     toValue: 50,
-          //     easing: Easing.ease,
-          //     useNativeDriver: false,
-          //     duration: 100,
-          //   }).start();
-          // } else if (scrollDirection.current === 'up') {
-          //   console.log('up');
-          //   Animated.timing(animHeader, {
-          //     toValue: 0,
-          //     easing: Easing.ease,
-          //     useNativeDriver: false,
-          //     duration: 100,
-          //   }).start();
-          // }
         }}
         showsVerticalScrollIndicator={false}
         scrollEventThrottle={20}>
