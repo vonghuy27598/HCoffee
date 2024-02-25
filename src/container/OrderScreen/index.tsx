@@ -1,11 +1,13 @@
-import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
+import {StyleSheet, Text, View} from 'react-native';
+import FeatureProduct from './FeatureProduct';
+import {OrderProvider} from './OrderProvider';
 
 const OrderScreen = () => {
   return (
-    <View>
-      <Text>OrderScreen</Text>
-    </View>
+    <OrderProvider>
+      <FeatureProduct />
+    </OrderProvider>
   );
 };
 
