@@ -22,6 +22,8 @@
        "@constant/*":["src/constant/*"],
        "@navigator/*":["src/navigator/*"],
        "@redux/*":["src/redux/*"],
+       "@graphQL/*":["src/graphQL/*"],
+       "@type/*":["src/type/*"],
      },
   },
 }

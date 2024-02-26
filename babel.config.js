@@ -17,6 +17,8 @@ module.exports = {
           '@container': './src/container',
           '@navigator': './src/navigator',
           '@redux': './src/redux',
+          '@graphQL': './src/graphQL',
+          '@type': './src/type',
         },
       },
     ],

@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {CONSTANTS_STORAGE} from '../../constants';
-type Method = 'PUT' | 'POST' | 'DELETE' | 'GET';
+export type Method = 'PUT' | 'POST' | 'DELETE' | 'GET';
 export interface IFetchAPI {
   url: string;
   request?: {
