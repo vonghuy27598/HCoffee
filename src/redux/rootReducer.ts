@@ -1,8 +1,9 @@
 import {combineReducers} from 'redux';
 import {getCategoryMenuReducer} from './reducer/categoryMenuReducer';
-
+import {getBannerHomeReducer} from './reducer/bannerReducer';
 const appReducer = combineReducers({
   getCategoryMenuReducer,
+  getBannerHomeReducer,
 });
 
 const rootReducer = (state: any, action: any) => {

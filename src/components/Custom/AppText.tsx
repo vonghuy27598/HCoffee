@@ -3,7 +3,7 @@ import {GestureResponderEvent, StyleProp, Text, TextStyle} from 'react-native';
 import {COLORS} from '../../constants';
 import {fontFamily} from '../../constants/fonts';
 
-interface styleText {
+interface PropertyText {
   style?: StyleProp<TextStyle>;
   disabled?: boolean;
   key?: React.Key;
@@ -16,7 +16,7 @@ interface styleText {
   textFont?: string;
 }
 
-const AppText = (props: styleText) => {
+const AppText = (props: PropertyText) => {
   const appFont = 'regular';
   const defaultFont = (font: string) => {
     switch (font) {
@@ -46,7 +46,7 @@ const AppText = (props: styleText) => {
     <Text
       style={[
         {
-          color: COLORS.TEXT_COLOR_BLACK,
+          color: COLORS.TEXT_BLACK_COLOR,
           fontSize: 14,
           includeFontPadding: false,
           fontFamily: defaultFont(

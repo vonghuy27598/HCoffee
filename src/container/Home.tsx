@@ -6,6 +6,7 @@ import RewardHome from '../components/RewardHome';
 import PaddingHeader from '../components/PaddingHeader';
 import LinearGradient from 'react-native-linear-gradient';
 import CategoryMenu from '../components/CategoryMenu';
+import Banner from '@components/Banner';
 const HomeScreen = () => {
   const animHeader = useRef(new Animated.Value(0)).current;
   const animHeaderBG = useRef(new Animated.Value(0)).current;
@@ -93,6 +94,7 @@ const HomeScreen = () => {
         </LinearGradient>
         <View style={styles.container}>
           <CategoryMenu />
+          <Banner />
         </View>
       </ScrollView>
     </SafeAreaView>

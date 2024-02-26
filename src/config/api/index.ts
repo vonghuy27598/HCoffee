@@ -1,4 +1,4 @@
 import * as constantsURL from './constants';
-import * as fetchAPI from './fetchAPI';
+import {fetchAPI} from './fetchAPI';
 
 export {constantsURL, fetchAPI};

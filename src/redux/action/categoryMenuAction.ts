@@ -11,8 +11,6 @@ export const getCategoryMenu = () => {
         url: constantsURL.GET_CATEGORY_MENU,
       };
       const response = await fetchAPI(paramsAPI);
-      console.log('CALL APIACTION', response);
-
       if (!Helper.isNullOrUndefined(response)) {
         console.log(response);
         dispatch(
