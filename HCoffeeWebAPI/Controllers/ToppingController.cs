@@ -30,6 +30,21 @@ namespace HCoffeeWebAPI.Controllers
 
         }
 
+        [HttpPost]
+        public async Task<IActionResult> GetListTopping(int[] listIdTopping)
+        {
+            try
+            {
+                var listTopping = await _repo.GetListTopping(listIdTopping);
+                return Ok(listTopping);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+        }
+
         [HttpGet("{toppingId}")]
         public async Task<IActionResult> GetToppingById(int toppingId)
         {

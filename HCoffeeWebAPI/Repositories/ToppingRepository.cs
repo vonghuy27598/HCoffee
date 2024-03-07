@@ -19,7 +19,7 @@ namespace HCoffeeWebAPI.Repositories
 
         public async Task AddTopping(ToppingModel model)
         {
-            _context.Topping.AddAsync(_mapper.Map<Topping>(model));
+            _context.Topping.Add(_mapper.Map<Topping>(model));
             await _context.SaveChangesAsync();
         }
 
@@ -34,6 +34,38 @@ namespace HCoffeeWebAPI.Repositories
         {
             var listTopping = await _context.Topping.ToListAsync();
             return _mapper.Map<List<ToppingModel>>(listTopping);
+        }
+
+        public async Task<List<ToppingModel>> GetListTopping(int[] listIdTopping)
+        {
+            var listTopping = new List<ToppingModel>();
+
+            // this way optimal
+            for (int i = 0; i < listIdTopping.Length; i++)
+            {
+                var topping = _context.Topping.SingleOrDefault(x=>x.ToppingId == listIdTopping[i]);
+                if(topping != null)
+                {
+                    listTopping.Add(_mapper.Map<ToppingModel>(topping));
+                }
+            }
+            
+            // IF HAVE BIG DATA THIS WAY SO LOW
+
+            //var index = 0;
+            //foreach (var item in _context.Topping)
+            //{
+
+            //    if (item?.ToppingId == listIdTopping[index])
+            //    {
+            //        listTopping?.Add(_mapper.Map<ToppingModel>(item));
+            //        var checkIndex = index + 1;
+            //        if (checkIndex == listIdTopping.Length)
+            //            break;
+            //        index++;
+            //    }
+            //}
+            return  _mapper.Map<List<ToppingModel>>(listTopping);
         }
 
         public async Task<ToppingModel> GetToppingById(int toppingId)

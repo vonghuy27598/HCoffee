@@ -136,3 +136,4 @@ C:\Users\PC\Desktop\trainningCode\WebAPI\HCoffeeWebAPI\HCoffeeWebAPI\obj\Release
 C:\Users\PC\Desktop\trainningCode\WebAPI\HCoffeeWebAPI\HCoffeeWebAPI\obj\Release\net8.0\HCoffeeWebAPI.pdb
 C:\Users\PC\Desktop\trainningCode\WebAPI\HCoffeeWebAPI\HCoffeeWebAPI\obj\Release\net8.0\HCoffeeWebAPI.genruntimeconfig.cache
 C:\Users\PC\Desktop\trainningCode\WebAPI\HCoffeeWebAPI\HCoffeeWebAPI\obj\Release\net8.0\ref\HCoffeeWebAPI.dll
+C:\Users\PC\Desktop\trainningCode\WebAPI\HCoffeeWebAPI\HCoffeeWebAPI\obj\Release\net8.0\HCoffeeWebAPI.sourcelink.json

@@ -19,7 +19,7 @@ namespace HCoffeeWebAPI.Repositories
         }
         public async Task AddBanner(BannerModel model)
         {
-            _context.Banner.AddAsync(_mapper.Map<Banner>(model));
+            _context.Banner.Add(_mapper.Map<Banner>(model));
             await _context.SaveChangesAsync();
         }
 
