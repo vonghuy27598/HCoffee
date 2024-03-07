@@ -1,6 +1,6 @@
-import {IListCategoryMenu} from '../../type/categoryMenuType';
+import {IStoreCategoryMenu} from '../../type/categoryMenuType';
 
-export const categoryMenuStore: IListCategoryMenu = {
-  data: [],
-  isLoading: true,
+export const categoryMenuStore: IStoreCategoryMenu = {
+  dataMenu: [],
+  isLoadingMenu: true,
 };

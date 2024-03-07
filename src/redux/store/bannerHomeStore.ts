@@ -1,7 +1,7 @@
-import {IListBannerType} from '../../type/bannerType';
+import {IStoreBannerType} from '../../type/bannerType';
 
-export const bannerHomeStore: IListBannerType = {
-  data: [],
+export const bannerHomeStore: IStoreBannerType = {
+  dataBanner: [],
   arrayImage: [],
-  isLoading: true,
+  isLoadingBanner: true,
 };

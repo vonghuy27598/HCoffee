@@ -1,19 +1,19 @@
 import {typeBannerAction} from '@redux/constants/typeBannerAction';
 import {bannerHomeStore} from '@redux/store/bannerHomeStore';
-import {IListBannerType} from 'src/type/bannerType';
+import {IStoreBannerType} from 'src/type/bannerType';
 
 export const getBannerHomeReducer = (
   state = bannerHomeStore,
   action: any,
-): IListBannerType => {
+): IStoreBannerType => {
   const {type, payload} = action;
   switch (type) {
-    case typeBannerAction.GET_LIST_BANNER_HOME:
+    case typeBannerAction.ACTION_GET_LIST_BANNER_HOME:
       return {
         ...state,
-        data: payload.response,
+        dataBanner: payload.response,
         arrayImage: payload.arrayImage,
-        isLoading: false,
+        isLoadingBanner: false,
       };
     default:
       return state;

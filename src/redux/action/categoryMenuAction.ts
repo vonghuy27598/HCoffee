@@ -1,7 +1,7 @@
 import {Helper} from '../../common';
 import {constantsURL} from '../../config/api';
 import {AppDispatch} from '../store';
-import {typeCategoryMenu} from '../constants/typeCategoryMenuAction';
+import {typeCategoryMenuAction} from '../constants/typeCategoryMenuAction';
 import {fetchAPI, IFetchAPI} from '../../config/api/fetchAPI';
 
 export const getCategoryMenu = () => {
@@ -12,9 +12,11 @@ export const getCategoryMenu = () => {
       };
       const response = await fetchAPI(paramsAPI);
       if (!Helper.isNullOrUndefined(response)) {
-        console.log(response);
         dispatch(
-          Helper.createAction(typeCategoryMenu.GET_CATEGORY_MENU, response),
+          Helper.createAction(
+            typeCategoryMenuAction.ACTION_GET_CATEGORY_MENU,
+            response,
+          ),
         );
       }
     } catch (error) {

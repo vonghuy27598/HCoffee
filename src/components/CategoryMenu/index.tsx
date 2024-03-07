@@ -1,32 +1,23 @@
-import React, {useEffect} from 'react';
+import React, {useMemo} from 'react';
 import {View, FlatList} from 'react-native';
-import {useDispatch, useSelector} from 'react-redux';
-import {getCategoryMenu} from '../../redux/action/categoryMenuAction';
-import {RootState} from '../../redux/store';
 import RenderCategoryMenu from './RenderCategoryMenu';
 import {styles} from './styles';
+import {useHome} from '@container/HomeScreen/Provider/HomeProvider';
 
 const CategoryMenu = () => {
-  const dispatch = useDispatch<any>();
-  const data = useSelector(
-    (state: RootState) => state.getCategoryMenuReducer.data,
-  );
-  const isLoading = useSelector(
-    (state: RootState) => state.getCategoryMenuReducer.isLoading,
-  );
-  useEffect(() => {
-    dispatch(getCategoryMenu());
-  }, []);
-  return (
-    <View>
-      <FlatList
-        data={data}
-        renderItem={RenderCategoryMenu}
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        style={styles.contentContainerStyle}
-      />
-    </View>
-  );
+  const {dataMenu, isLoadingMenu} = useHome();
+  return useMemo(() => {
+    return (
+      <View>
+        <FlatList
+          data={dataMenu}
+          renderItem={RenderCategoryMenu}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          style={styles.contentContainerStyle}
+        />
+      </View>
+    );
+  }, [dataMenu, isLoadingMenu]);
 };
 export default CategoryMenu;

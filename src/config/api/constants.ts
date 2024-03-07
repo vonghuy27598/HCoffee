@@ -1,4 +1,4 @@
-const API_BASE = 'http://localhost:5132/api';
+const API_BASE = 'http://192.168.1.2:8082/api';
 
 export const METHOD = {
   GET: 'GET',
@@ -7,11 +7,14 @@ export const METHOD = {
   DELETE: 'DELETE',
 };
 
-//GET PRODUCT HOME
+//GET PRODUCT
 export const GET_ALL_PRODUCT = `${API_BASE}/Product/GetAllProduct`;
 
-//GET MENU HOME
+//GET MENU
 export const GET_CATEGORY_MENU = `${API_BASE}/CategoryMenu/GetAllMenu`;
 
-//GET BANNER HOME
+//GET BANNER
 export const GET_BANNER_HOME = `${API_BASE}/Banner/GetAllBanner`;
+
+//GET CATEGORY
+export const GET_CATEGORY = `${API_BASE}/Category/GetAllCategories`;

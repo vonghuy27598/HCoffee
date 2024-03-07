@@ -14,6 +14,9 @@ interface PropertyText {
   ref?: React.LegacyRef<Text> | undefined;
   text?: string;
   textFont?: string;
+  textColor?: string;
+  textAlign?: 'auto' | 'center' | 'justify' | 'left' | 'right' | undefined;
+  textSize?: number;
 }
 
 const AppText = (props: PropertyText) => {
@@ -46,12 +49,13 @@ const AppText = (props: PropertyText) => {
     <Text
       style={[
         {
-          color: COLORS.TEXT_BLACK_COLOR,
-          fontSize: 14,
+          color: props.textColor ? props.textColor : COLORS.TEXT_BLACK_COLOR,
+          fontSize: props.textSize ? props.textSize : 14,
           includeFontPadding: false,
           fontFamily: defaultFont(
             props?.textFont !== undefined ? props?.textFont : appFont,
           ),
+          textAlign: props?.textAlign ? props.textAlign : 'justify',
         },
         props?.style,
       ]}

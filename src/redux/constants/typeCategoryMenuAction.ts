@@ -1,5 +1,5 @@
-const GET_CATEGORY_MENU = 'GET_CATEGORY_MENU';
+const ACTION_GET_CATEGORY_MENU = 'ACTION_GET_CATEGORY_MENU';
 
-export const typeCategoryMenu = {
-  GET_CATEGORY_MENU,
+export const typeCategoryMenuAction = {
+  ACTION_GET_CATEGORY_MENU,
 };

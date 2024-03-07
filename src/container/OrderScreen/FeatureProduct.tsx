@@ -1,6 +1,6 @@
 import {FlatList, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
-import {useOrder} from './OrderProvider';
+import {useOrder} from './Provider/OrderProvider';
 import Product from '@components/Products';
 
 const FeatureProduct = () => {

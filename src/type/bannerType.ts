@@ -1,7 +1,7 @@
-export interface IListBannerType {
-  data: IBannerType[];
+export interface IStoreBannerType {
+  dataBanner: IBannerType[];
   arrayImage: string[];
-  isLoading: boolean;
+  isLoadingBanner: boolean;
 }
 export interface IBannerType {
   BannerId: number;

@@ -7,12 +7,15 @@ import 'react-native-gesture-handler';
 import 'react-native-devsettings';
 import 'react-native-devsettings/withAsyncStorage';
 import MainNavigator from '@navigator/MainNavigator';
+import {PortalProvider} from '@gorhom/portal';
 
 const App = () => {
   return (
     <Provider store={store}>
       <ApolloProvider client={client}>
-        <MainNavigator />
+        <PortalProvider>
+          <MainNavigator />
+        </PortalProvider>
       </ApolloProvider>
     </Provider>
   );

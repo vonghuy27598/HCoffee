@@ -17,7 +17,10 @@ export const getBannerHome = () => {
         });
         const payload = {response, arrayImage};
         dispatch(
-          Helper.createAction(typeBannerAction.GET_LIST_BANNER_HOME, payload),
+          Helper.createAction(
+            typeBannerAction.ACTION_GET_LIST_BANNER_HOME,
+            payload,
+          ),
         );
       }
     } catch (error) {

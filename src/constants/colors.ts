@@ -1,6 +1,9 @@
 export const PRIMARY_COLOR = '#ed7a5a';
+export const LIGHT_PRIMARY_COLOR = '#f7eae5';
 export const TEXT_BLACK_COLOR = '#434343';
 export const WHITE_COLOR = '#FFF';
+export const GRAY_COLOR = '#808080';
 export const LIGHT_GRAY_COLOR = '#C0B3B0';
+export const GRAY_cbc9c9_COLOR = '#cbc9c9';
 export const BANNER_DOT_COLOR = '#FFF';
 export const BANNER_SELECTED_DOT_COLOR = '#000';

@@ -1,22 +1,29 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {TouchableOpacity, View} from 'react-native';
 import React from 'react';
 import {IProductType} from '@type/productType';
 import AvatarProduct from './AvatarProduct';
 import InfoProduct from './InfoProduct';
 import ButtonBuy from './ButtonBuy';
+import {styles} from './styles';
+import {useLineCateProduct} from '@components/FeatureLineCateProduct/Provider/LineCateProductProvider';
 
-const VerticalBox = (product: IProductType) => {
+interface IProps {
+  product: IProductType;
+}
+
+const VerticalBox = ({product}: IProps) => {
   return (
-    <View>
-      <AvatarProduct
-        styleImage={{width: 110, height: 110}}
-        path={product.imageProduct}
-      />
-      <InfoProduct {...product} />
+    <View style={[styles.containerProductHalfWidth, styles.containerProduct]}>
+      <TouchableOpacity>
+        <AvatarProduct
+          styleImage={[styles.imageProductHaflWidth, styles.imageProduct]}
+          path={product.imageProduct}
+        />
+        <InfoProduct product={product} />
+      </TouchableOpacity>
+      <ButtonBuy product={product} />
     </View>
   );
 };
 
 export default VerticalBox;
-
-const styles = StyleSheet.create({});

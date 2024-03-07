@@ -1,10 +1,4 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  ImageStyle,
-  TouchableOpacity,
-} from 'react-native';
+import {View} from 'react-native';
 import React from 'react';
 import FastImage, {FastImageProps} from 'react-native-fast-image';
 
@@ -16,9 +10,7 @@ interface IAvatarProduct {
 const AvatarProduct = ({path, styleImage = {}}: IAvatarProduct) => {
   return (
     <View>
-      <TouchableOpacity>
-        <FastImage style={{...(styleImage as any)}} source={{uri: path}} />
-      </TouchableOpacity>
+      <FastImage style={styleImage} source={{uri: path}} resizeMode="contain" />
     </View>
   );
 };

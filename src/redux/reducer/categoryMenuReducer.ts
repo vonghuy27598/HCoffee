@@ -1,18 +1,18 @@
-import {IListCategoryMenu} from '../../type/categoryMenuType';
-import {typeCategoryMenu} from '../constants/typeCategoryMenuAction';
+import {IStoreCategoryMenu} from '../../type/categoryMenuType';
+import {typeCategoryMenuAction} from '../constants/typeCategoryMenuAction';
 import {categoryMenuStore} from '../store/categoryMenuStore';
 
 export const getCategoryMenuReducer = (
   state = categoryMenuStore,
   action: any,
-): IListCategoryMenu => {
+): IStoreCategoryMenu => {
   const {type, payload} = action;
   switch (type) {
-    case typeCategoryMenu.GET_CATEGORY_MENU:
+    case typeCategoryMenuAction.ACTION_GET_CATEGORY_MENU:
       return {
         ...state,
-        data: payload,
-        isLoading: false,
+        dataMenu: payload,
+        isLoadingMenu: false,
       };
     default:
       return state;

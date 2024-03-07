@@ -1,10 +1,21 @@
 export interface IToppingType {
-  ToppingId: number;
-  ToppingName: string;
-  Description: string;
-  ImageTopping: string;
-  Price: number;
-  ReducedPrice: number;
-  UnitProduct: string;
-  ID_Cate: number;
+  toppingId: number;
+  toppingName: string;
+  description: string;
+  imageTopping: string;
+  price: number;
+  reducedPrice: number;
+  unitProduct: string;
+  iD_Cate: number;
+}
+
+export interface IStoreSelectToppingType {
+  listSelectTopping: ISelectToppingType[];
+}
+
+export interface ISelectToppingType {
+  toppingId: number;
+  toppingName: string;
+  price: number;
+  checked: boolean;
 }

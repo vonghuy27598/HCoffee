@@ -1,6 +1,6 @@
-export interface IListCategoryMenu {
-  data: ICategoryMenu[];
-  isLoading: boolean;
+export interface IStoreCategoryMenu {
+  dataMenu: ICategoryMenu[];
+  isLoadingMenu: boolean;
 }
 
 export interface ICategoryMenu {

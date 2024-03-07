@@ -1,8 +1,8 @@
 import {IProductType} from '@type/productType';
 import React from 'react';
-import {StyleSheet} from 'react-native';
 import HorizontalBox from './HorizontalBox';
 import VerticalBox from './VerticalBox';
+import {useLineCateProduct} from '@components/FeatureLineCateProduct/Provider/LineCateProductProvider';
 
 const BoxType = {
   Horizontal: 'Horizontal',
@@ -15,13 +15,12 @@ interface IProduct {
 }
 
 const Product = ({product, boxType}: IProduct) => {
-  console.log('product', product);
-  if (boxType === 'Horizontal') {
-    return <HorizontalBox {...product} />;
+  const {currentScreen} = useLineCateProduct();
+
+  if (currentScreen.current === 'OrderTab') {
+    return <HorizontalBox product={product} />;
   }
-  return <VerticalBox {...product} />;
+  return <VerticalBox product={product} />;
 };
 
 export default Product;
-
-const styles = StyleSheet.create({});

@@ -1,4 +1,3 @@
-import {constantsURL} from '@config/api';
 import {MutationGQL, requestConfig} from '@graphQL/queries';
 import {IProductType} from '@type/productType';
 import {productFields} from '../fragment/fragmentOrder';

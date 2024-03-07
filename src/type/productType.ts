@@ -1,3 +1,5 @@
+import {IToppingType} from './toppingType';
+
 export interface IProductType {
   productId: number;
   productName: string;
@@ -11,4 +13,5 @@ export interface IProductType {
   unitProduct: string;
   iD_Cate: number;
   iD_TypeTopping: number[];
+  listTopping: IToppingType[];
 }

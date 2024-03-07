@@ -1,12 +1,15 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
-import FeatureProduct from './FeatureProduct';
-import {OrderProvider} from './OrderProvider';
+import {StyleSheet} from 'react-native';
+import {OrderProvider} from './Provider/OrderProvider';
+import ContainerOder from './Component/ContainerOder';
+import HeaderOrder from '@components/Header/HeaderOrder/HeaderOrder';
 
 const OrderScreen = () => {
   return (
     <OrderProvider>
-      <FeatureProduct />
+      {/* <FeatureProduct /> */}
+      <HeaderOrder />
+      <ContainerOder />
     </OrderProvider>
   );
 };

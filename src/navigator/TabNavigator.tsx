@@ -1,41 +1,63 @@
-import HomeScreen from '@container/Home';
+import HomeScreen from '@container/HomeScreen';
 import OrderScreen from '@container/OrderScreen';
 import PromotionScreen from '@container/PromotionScreen';
 import StoreScreen from '@container/StoreScreen';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
 import React from 'react';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import {COLORS} from '../constants';
 
 const Tab = createBottomTabNavigator();
 const TabNavigator = () => {
   return (
-    <Tab.Navigator>
+    <Tab.Navigator
+      initialRouteName="HomeTab"
+      screenOptions={{
+        tabBarActiveTintColor: COLORS.PRIMARY_COLOR,
+      }}>
       <Tab.Screen
-        name="Home"
+        name="HomeTab"
         component={HomeScreen}
-        options={() => {
-          return {headerShown: false};
+        options={{
+          headerShown: false,
+          tabBarLabel: 'Trang chủ',
+          tabBarIcon: ({color, size}) => (
+            <Icon name="home-filled" size={size} color={color} />
+          ),
         }}
       />
       <Tab.Screen
-        name="Order"
+        name="OrderTab"
         component={OrderScreen}
-        options={() => {
-          return {headerShown: false};
+        options={{
+          headerShown: false,
+          tabBarLabel: 'Đặt hàng',
+          tabBarIcon: ({color, size}) => (
+            <Icon name="coffee" size={size} color={color} />
+          ),
         }}
       />
       <Tab.Screen
-        name="Store"
+        name="StoreTab"
         component={StoreScreen}
-        options={() => {
-          return {headerShown: false};
+        options={{
+          headerShown: false,
+          tabBarLabel: 'Cửa hàng',
+          tabBarIcon: ({color, size}) => (
+            <Icon name="store" size={size} color={color} />
+          ),
         }}
       />
       <Tab.Screen
-        name="Promotion"
+        name="PromotionTab"
         component={PromotionScreen}
-        options={() => {
-          return {headerShown: false};
+        options={{
+          headerShown: false,
+          tabBarLabel: 'Ưu đãi',
+          tabBarIcon: ({color, size}) => (
+            <Icon name="discount" size={size} color={color} />
+          ),
         }}
       />
     </Tab.Navigator>
