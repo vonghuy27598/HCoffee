@@ -17,7 +17,11 @@ const BOTTOM_FOOTER_HEIGHT = BOTTOM_SHEET_MAX_HEIGHT * 0.09;
 // const MAX_UPWAR_TRANSLATE_Y = 0 - BOTTOM_SHEET_DISTANCE_HEIGHT; // upward translate y max height screen
 // const MAX_DOWNWAR_TRANSLATE_Y = BOTTOM_SHEET_MAX_HEIGHT;
 // const DRAG_THRESHOLD = 150;
-const AppDraggableBottom = (props: IDraggableBottomProps) => {
+const AppDraggableBottom = ({
+  HeaderBottomSheetComponent,
+  BodyBottomSheetComponent,
+  FooterBottoomSheetComponent,
+}: IDraggableBottomProps) => {
   const {
     showBottomSheet,
     animatedHideOrShow,
@@ -27,15 +31,15 @@ const AppDraggableBottom = (props: IDraggableBottomProps) => {
     bottomBodyContentAnimation,
   } = useAppBottomSheet();
   const HeaderBottomSheet = () => {
-    return props.HeaderBottomSheetComponent;
+    return HeaderBottomSheetComponent;
   };
 
   const BodyBottomSheet = () => {
-    return props.BodyBottomSheetComponent;
+    return BodyBottomSheetComponent;
   };
 
   const FooterBottomSheet = () => {
-    return props.FooterBottoomSheetComponent;
+    return FooterBottoomSheetComponent;
   };
   return (
     showBottomSheet && (

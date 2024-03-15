@@ -1,0 +1,5 @@
+const ACTION_GET_CURRENT_LOCATION = 'ACTION_GET_CURRENT_LOCATION';
+
+export const typeLocationAction = {
+  ACTION_GET_CURRENT_LOCATION,
+};

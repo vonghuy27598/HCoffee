@@ -1,5 +1,11 @@
 import React from 'react';
-import {GestureResponderEvent, StyleProp, Text, TextStyle} from 'react-native';
+import {
+  Animated,
+  GestureResponderEvent,
+  StyleProp,
+  Text,
+  TextStyle,
+} from 'react-native';
 import {COLORS} from '../../constants';
 import {fontFamily} from '../../constants/fonts';
 
@@ -12,11 +18,13 @@ interface PropertyText {
   ellipsizeMode?: 'head' | 'middle' | 'tail' | 'clip' | undefined;
   onPress?: ((event: GestureResponderEvent) => void) | undefined;
   ref?: React.LegacyRef<Text> | undefined;
+  refAnimated?: React.Ref<Text | Animated.LegacyRef<Text>> | undefined;
   text?: string;
   textFont?: string;
   textColor?: string;
   textAlign?: 'auto' | 'center' | 'justify' | 'left' | 'right' | undefined;
   textSize?: number;
+  animated?: boolean;
 }
 
 const AppText = (props: PropertyText) => {
@@ -45,7 +53,7 @@ const AppText = (props: PropertyText) => {
         return fontFamily.FONT_OPENSANS_REGULAR;
     }
   };
-  return (
+  return !props.animated ? (
     <Text
       style={[
         {
@@ -68,6 +76,29 @@ const AppText = (props: PropertyText) => {
       ref={props?.ref}>
       {props?.text}
     </Text>
+  ) : (
+    <Animated.Text
+      style={[
+        {
+          color: props.textColor ? props.textColor : COLORS.TEXT_BLACK_COLOR,
+          fontSize: props.textSize ? props.textSize : 14,
+          includeFontPadding: false,
+          fontFamily: defaultFont(
+            props?.textFont !== undefined ? props?.textFont : appFont,
+          ),
+          textAlign: props?.textAlign ? props.textAlign : 'justify',
+        },
+        props?.style,
+      ]}
+      disabled={props?.disabled}
+      key={props?.key}
+      allowFontScaling={props?.allowFontScaling}
+      numberOfLines={props?.numberOfLines}
+      ellipsizeMode={props?.ellipsizeMode}
+      onPress={props?.onPress}
+      ref={props?.refAnimated}>
+      {props?.text}
+    </Animated.Text>
   );
 };
 

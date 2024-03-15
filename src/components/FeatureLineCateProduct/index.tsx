@@ -2,13 +2,14 @@ import React from 'react';
 import {LineCateProductProvider} from './Provider/LineCateProductProvider';
 import BoxCategory from './Component/BoxCategory';
 import LineProductByCate from './Component/LineProductByCate';
-import {View} from 'react-native';
+import ShowBottomSheet from './Component/ShotBottomSheet';
 
 const FeatureLineCateProduct = () => {
   return (
     <LineCateProductProvider>
       <BoxCategory />
       <LineProductByCate />
+      <ShowBottomSheet />
     </LineCateProductProvider>
   );
 };

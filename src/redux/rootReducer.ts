@@ -4,12 +4,14 @@ import {getBannerHomeReducer} from './reducer/bannerReducer';
 import {
   getCategoryReducer,
   setPositionCategory,
+  setHeaderCateName,
 } from './reducer/categoryReducer';
 import {
   selectToppingReducer,
   selectOptionBuyReducer,
   setCartReducer,
 } from './reducer/cartReducer';
+import {getLocationUserReducer} from './reducer/locationReducer';
 const appReducer = combineReducers({
   getCategoryMenuReducer,
   getBannerHomeReducer,
@@ -18,6 +20,8 @@ const appReducer = combineReducers({
   selectToppingReducer,
   selectOptionBuyReducer,
   setCartReducer,
+  setHeaderCateName,
+  getLocationUserReducer,
 });
 
 const rootReducer = (state: any, action: any) => {

@@ -1,15 +1,14 @@
 import AppText from '@components/Custom/AppText';
-import {useHome} from '@container/HomeScreen/Provider/HomeProvider';
 import React from 'react';
 import {TouchableOpacity, View} from 'react-native';
 import {styles} from './styles';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {COLORS} from '../../constants';
 import {Helper} from '@common/index';
+import {useLineCateProduct} from '@components/FeatureLineCateProduct/Provider/LineCateProductProvider';
 
 const FooterOptionBuy = () => {
-  const {chooseProduct, quantity, setQuantity, totalPrice, addToCart} =
-    useHome();
+  const {quantity, setQuantity, totalPrice, addToCart} = useLineCateProduct();
   return (
     <View style={styles.containerFooter}>
       <View style={styles.viewQuantity}>
@@ -27,7 +26,12 @@ const FooterOptionBuy = () => {
         </TouchableOpacity>
       </View>
       <View style={styles.viewBtnBuy}>
-        <TouchableOpacity style={styles.btnBuy} onPress={() => addToCart()}>
+        <TouchableOpacity
+          style={styles.btnBuy}
+          onPress={() => {
+            addToCart();
+            // animatedHideOrShow('hide');
+          }}>
           <AppText
             text={Helper.formatPrice(totalPrice)}
             textFont="bold"

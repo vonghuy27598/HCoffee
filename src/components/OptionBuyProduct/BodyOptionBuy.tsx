@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import AppText from '@components/Custom/AppText';
-import {useHome} from '@container/HomeScreen/Provider/HomeProvider';
-import React, {useMemo, useState} from 'react';
+import React, {useMemo} from 'react';
 import {Alert, TouchableOpacity, View} from 'react-native';
 import {Checkbox, RadioButton} from 'react-native-paper';
 import {styles} from './styles';
 import {Helper} from '@common/index';
 import {COLORS} from '../../constants';
 import {ScrollView} from 'react-native';
+import {useLineCateProduct} from '@components/FeatureLineCateProduct/Provider/LineCateProductProvider';
 
 const BodyOptionBuy = () => {
   const {
@@ -16,7 +16,7 @@ const BodyOptionBuy = () => {
     setCheckSize,
     listSelectTopping,
     setSelectTopping,
-  } = useHome();
+  } = useLineCateProduct();
 
   return useMemo(() => {
     return (

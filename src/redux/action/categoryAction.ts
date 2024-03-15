@@ -45,3 +45,14 @@ export const setPositionCategory = ({
     );
   };
 };
+
+export const setHeaderCateName = (cateName: string) => {
+  return async (dispatch: AppDispatch) => {
+    dispatch(
+      Helper.createAction(
+        typeCategoryAction.ACTION_SET_HEADER_CATE_CATEGORY,
+        cateName,
+      ),
+    );
+  };
+};

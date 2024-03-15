@@ -14,7 +14,6 @@ interface IProps {
 
 const RenderCategory = ({item, index}: IProps) => {
   const {handleChooseCategory, currentScreen} = useLineCateProduct();
-  console.log('RENDER RenderCategory', currentScreen, item);
   return useMemo(() => {
     return (
       <TouchableOpacity

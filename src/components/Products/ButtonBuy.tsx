@@ -1,17 +1,16 @@
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {StyleSheet, TouchableOpacity} from 'react-native';
 import React from 'react';
-import AppText from '@components/Custom/AppText';
 import Icon from 'react-native-vector-icons/Feather';
 import {COLORS} from '../../constants';
 import {IProductType} from '@type/productType';
-import {useHome} from '@container/HomeScreen/Provider/HomeProvider';
+import {useLineCateProduct} from '@components/FeatureLineCateProduct/Provider/LineCateProductProvider';
 
 interface IProps {
   product: IProductType;
 }
 
 const ButtonBuy = ({product}: IProps) => {
-  const {setShowBottomSheet, selectProduct} = useHome();
+  const {setShowBottomSheet, selectProduct} = useLineCateProduct();
   return (
     <TouchableOpacity
       style={styles.btnBuy}

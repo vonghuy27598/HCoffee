@@ -7,24 +7,15 @@ import CategoryMenu from '@components/CategoryMenu';
 import Banner from '@components/Banner';
 import {styles} from './styles';
 import {useHome} from '../Provider/HomeProvider';
-import {
-  BodyOptionBuy,
-  FooterOptionBuy,
-  HeaderOptionBuy,
-} from '@components/OptionBuyProduct';
-import AppDraggaleBottomSheet from '@components/Custom/AppDraggaleBottomSheet';
 import FeatureLineCateProduct from '@components/FeatureLineCateProduct';
 
 const ContainerHome = () => {
   const {
-    showBottomSheet,
-    setShowBottomSheet,
-    animHeader,
-    animHeaderBG,
-    lastOffsetY,
-    scrollDirection,
     scrollRefHome,
     setDistanceCategoryHome,
+    handleScroll,
+    handleEndScroll,
+    handleEndDragScroll,
   } = useHome();
   console.log('RENDER CONTAINER HOME');
   return (
@@ -33,25 +24,14 @@ const ContainerHome = () => {
         ref={scrollRefHome}
         onScroll={e => {
           const offsetY = e.nativeEvent.contentOffset.y;
-          scrollDirection.current =
-            offsetY - lastOffsetY.current > 0 ? 'down' : 'up';
-          lastOffsetY.current = offsetY;
-          animHeaderBG.setValue(offsetY);
-          animHeader.setValue(offsetY);
+          handleScroll(offsetY);
+        }}
+        onMomentumScrollEnd={e => {
+          handleEndScroll();
         }}
         onScrollEndDrag={e => {
-          console.log('scrollDirection', scrollDirection.current);
-          if (
-            scrollDirection.current === 'down' &&
-            e.nativeEvent.contentOffset.y < 50
-          ) {
-            scrollRefHome.current?.scrollTo({y: 50, animated: true});
-          } else if (
-            scrollDirection.current === 'up' &&
-            e.nativeEvent.contentOffset.y < 50
-          ) {
-            scrollRefHome.current?.scrollTo({y: 0, animated: true});
-          }
+          const offsetY = e.nativeEvent.contentOffset.y;
+          handleEndDragScroll(offsetY);
         }}
         showsVerticalScrollIndicator={false}
         scrollEventThrottle={20}
@@ -78,23 +58,9 @@ const ContainerHome = () => {
           }}>
           <CategoryMenu />
           <Banner />
-          {/* <BoxCategory />
-          <View
-            onLayout={e => {
-              setDistaceLineProductCate(e.nativeEvent.layout.y);
-            }}>
-            <LineProductByCate />
-          </View> */}
           <FeatureLineCateProduct />
         </View>
       </ScrollView>
-      {/* <AppDraggaleBottomSheet
-        showBottomSheet={showBottomSheet}
-        setShowBottomSheet={setShowBottomSheet}
-        HeaderBottomSheetComponent={HeaderOptionBuy()}
-        BodyBottomSheetComponent={BodyOptionBuy()}
-        FooterBottoomSheetComponent={FooterOptionBuy()}
-      /> */}
     </View>
   );
 };

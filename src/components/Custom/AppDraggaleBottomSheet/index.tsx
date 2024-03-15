@@ -10,17 +10,23 @@ export interface IDraggableBottomProps {
   setShowBottomSheet?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const AppDraggaleBottomSheet = (props: IDraggableBottomProps) => {
+const AppDraggaleBottomSheet = ({
+  showBottomSheet,
+  setShowBottomSheet,
+  HeaderBottomSheetComponent,
+  BodyBottomSheetComponent,
+  FooterBottoomSheetComponent,
+}: IDraggableBottomProps) => {
   return (
     <DraggableBottomSheetProvider
       value={{
-        showBottomSheet: props.showBottomSheet,
-        setShowBottomSheet: props.setShowBottomSheet,
+        showBottomSheet: showBottomSheet,
+        setShowBottomSheet: setShowBottomSheet,
       }}>
       <AppDraggableBottom
-        HeaderBottomSheetComponent={props.HeaderBottomSheetComponent}
-        BodyBottomSheetComponent={props.BodyBottomSheetComponent}
-        FooterBottoomSheetComponent={props.FooterBottoomSheetComponent}
+        HeaderBottomSheetComponent={HeaderBottomSheetComponent}
+        BodyBottomSheetComponent={BodyBottomSheetComponent}
+        FooterBottoomSheetComponent={FooterBottoomSheetComponent}
       />
     </DraggableBottomSheetProvider>
   );

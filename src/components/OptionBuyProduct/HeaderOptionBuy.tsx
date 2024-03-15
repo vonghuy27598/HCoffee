@@ -1,10 +1,10 @@
 import AppText from '@components/Custom/AppText';
-import {useHome} from '@container/HomeScreen/Provider/HomeProvider';
+import {useLineCateProduct} from '@components/FeatureLineCateProduct/Provider/LineCateProductProvider';
 import React from 'react';
 import {View} from 'react-native';
 
 const HeaderOptionBuy = () => {
-  const {chooseProduct} = useHome();
+  const {chooseProduct} = useLineCateProduct();
   return (
     <View>
       <AppText text={chooseProduct?.productName} textFont="bold" />

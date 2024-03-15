@@ -15,7 +15,6 @@ const BoxCategory = () => {
     setDistaceLineProductCate,
     setHeightBoxCate,
   } = useLineCateProduct();
-  console.log('RENDER BoxCategory', currentScreen, dataCategory);
 
   return useMemo(() => {
     return (

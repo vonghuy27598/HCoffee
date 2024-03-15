@@ -13,7 +13,7 @@ interface IProps {
 }
 
 const RenderLineCate = ({item, index, currentScreen}: IProps) => {
-  const {setPosition} = useLineCateProduct();
+  const {setPosition, setHeightLineCate, heightLineCate} = useLineCateProduct();
 
   return useMemo(() => {
     return (
@@ -22,7 +22,10 @@ const RenderLineCate = ({item, index, currentScreen}: IProps) => {
         style={styles.containerLineCate}
         onLayout={e => {
           const layout = e.nativeEvent.layout.height;
-          setPosition(index, layout);
+          setHeightLineCate(
+            heightLineCate ? [...heightLineCate, layout] : [layout],
+          );
+          setPosition(index, item.cateName);
         }}>
         <AppText text={item.cateName} textFont="bold" textSize={18} />
         <FlatList

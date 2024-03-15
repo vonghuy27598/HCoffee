@@ -12,3 +12,7 @@ export const categoryStore: IStoreCategoryType = {
 export const positionCategory: IStoreScreenCategoryPositionType = {
   dataPosition: [],
 };
+
+export const getHeaderCateName = {
+  cateName: 'Danh mục',
+};

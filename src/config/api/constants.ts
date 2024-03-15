@@ -1,4 +1,6 @@
 const API_BASE = 'http://192.168.1.2:8082/api';
+//REVERSE GEOLOCATION
+const API_REGEOCODE = 'https://revgeocode.search.hereapi.com/v1/revgeocode';
 
 export const METHOD = {
   GET: 'GET',
@@ -18,3 +20,6 @@ export const GET_BANNER_HOME = `${API_BASE}/Banner/GetAllBanner`;
 
 //GET CATEGORY
 export const GET_CATEGORY = `${API_BASE}/Category/GetAllCategories`;
+
+//API REVERSE GEOLOCATION
+export const GET_LOCATION_USER = `${API_REGEOCODE}`;

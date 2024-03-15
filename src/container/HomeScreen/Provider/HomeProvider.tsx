@@ -13,39 +13,23 @@ import {RootState} from '@redux/store';
 import {getCategoryMenu} from '@redux/action/categoryMenuAction';
 import {getBannerHome} from '@redux/action/bannerHomeAction';
 import {getAllCategory} from '@redux/action/categoryAction';
-import {useQuery} from '@apollo/client';
-import {getProductByCate} from '@graphQL/services/serviceLineProductByCate';
-import {useNavigation} from '@react-navigation/native';
-import {IProductType} from '@type/productType';
-import {Helper} from '@common/index';
-import {ISelectToppingType, IToppingType} from '@type/toppingType';
-import {
-  selectOptionBuy,
-  selectTopping,
-  setCart,
-} from '@redux/action/cartAction';
-import {IStoreOptionBuyProductType} from '@type/cartType';
-import {getAllTopping} from '@graphQL/services/serviceGetAllTopping';
+import {Dimensions} from '@common/index';
 
 const HomeContext = createContext({});
 
 const HomeProvider = ({children}: {children: React.ReactNode}) => {
+  const MIN_PADDING_HORIZONTAL = 20;
+  const MAX_PADDING_HORIZONTAL = 40;
+  const WIDTH_MAX_BOX_LOCATION = Dimensions.width - MIN_PADDING_HORIZONTAL;
+  const WIDTH_MIN_BOX_LOCATION = Dimensions.width - MAX_PADDING_HORIZONTAL;
+  const HEIGHT_BOX_LOCATION = 65;
   const animHeader = useRef(new Animated.Value(0)).current;
   const animHeaderBG = useRef(new Animated.Value(0)).current;
+  const animBoxLocation = useRef(new Animated.Value(0)).current;
   const scrollRefHome = useRef<ScrollView>(null);
   const scrollDirection = useRef('');
   const lastOffsetY = useRef(0);
-  const [showBottomSheet, setShowBottomSheet] = useState(false);
   const [distanceCategoryHome, setDistanceCategoryHome] = useState<number>(0);
-  const [chooseProduct, setChooseProduct] = useState<IProductType>();
-  const [listTopping, setListTopping] = useState<IToppingType[]>([]);
-  const [checkSize, setCheckSize] = useState(
-    !Helper.checkZeroPrice(chooseProduct?.smallPrice ?? 0)
-      ? 'smallPrice'
-      : 'mediumPrice',
-  );
-  const [quantity, setQuantity] = useState<number>(1);
-  const [totalPrice, setTotalPrice] = useState<number>(0);
   const dynamicHeaderAnimation = {
     backgroundColor: animHeaderBG.interpolate({
       inputRange: [0, 80],
@@ -82,6 +66,98 @@ const HomeProvider = ({children}: {children: React.ReactNode}) => {
       extrapolate: 'clamp',
     }),
   };
+
+  const boxLocationAnim = {
+    width: animBoxLocation.interpolate({
+      inputRange: [0, 1],
+      outputRange: [WIDTH_MAX_BOX_LOCATION, WIDTH_MIN_BOX_LOCATION],
+      extrapolate: 'clamp',
+    }),
+    height: animBoxLocation.interpolate({
+      inputRange: [0, 1],
+      outputRange: [HEIGHT_BOX_LOCATION, HEIGHT_BOX_LOCATION - 15],
+      extrapolate: 'clamp',
+    }),
+    left: animBoxLocation.interpolate({
+      inputRange: [0, 1],
+      outputRange: [MIN_PADDING_HORIZONTAL / 2, MAX_PADDING_HORIZONTAL / 2],
+      extrapolate: 'clamp',
+    }),
+  };
+  const iconAnim = {
+    transform: [
+      {
+        translateY: animBoxLocation.interpolate({
+          inputRange: [0, 1],
+          outputRange: [0, 10],
+          extrapolate: 'clamp',
+        }),
+      },
+      {
+        translateX: animBoxLocation.interpolate({
+          inputRange: [0, 1],
+          outputRange: [0, 3],
+          extrapolate: 'clamp',
+        }),
+      },
+    ],
+    width: animBoxLocation.interpolate({
+      inputRange: [0, 1],
+      outputRange: [20, 30],
+      extrapolate: 'clamp',
+    }),
+    height: animBoxLocation.interpolate({
+      inputRange: [0, 1],
+      outputRange: [20, 30],
+      extrapolate: 'clamp',
+    }),
+  };
+  const textTitleLocationAnim = {
+    transform: [
+      {
+        translateY: animBoxLocation.interpolate({
+          inputRange: [0, 1],
+          outputRange: [0, 10],
+          extrapolate: 'clamp',
+        }),
+      },
+      {
+        translateX: animBoxLocation.interpolate({
+          inputRange: [0, 1],
+          outputRange: [0, 10],
+          extrapolate: 'clamp',
+        }),
+      },
+    ],
+    opacity: animBoxLocation.interpolate({
+      inputRange: [0, 1],
+      outputRange: [1, 0],
+      extrapolate: 'clamp',
+    }),
+  };
+  const textLocationAnim = {
+    transform: [
+      {
+        translateY: animBoxLocation.interpolate({
+          inputRange: [0, 1],
+          outputRange: [0, -15],
+          extrapolate: 'clamp',
+        }),
+      },
+      {
+        translateX: animBoxLocation.interpolate({
+          inputRange: [0, 1],
+          outputRange: [0, 40],
+          extrapolate: 'clamp',
+        }),
+      },
+    ],
+    width: animBoxLocation.interpolate({
+      inputRange: [0, 1],
+      outputRange: ['100%', '80%'],
+      extrapolate: 'clamp',
+    }),
+  };
   const dispatch = useDispatch<any>();
   const {dataMenu, isLoadingMenu} = useSelector(
     (state: RootState) => state.getCategoryMenuReducer,
@@ -92,147 +168,38 @@ const HomeProvider = ({children}: {children: React.ReactNode}) => {
   const {dataCategory, isLoadingCategory} = useSelector(
     (state: RootState) => state.getCategoryReducer,
   );
-  const {listSelectTopping} = useSelector(
-    (state: RootState) => state.selectToppingReducer,
-  );
-  const dataSelectBuy = useSelector(
-    (state: RootState) => state.selectOptionBuyReducer,
-  );
+  const handleScroll = (offsetY: number) => {
+    scrollDirection.current = offsetY - lastOffsetY.current > 0 ? 'down' : 'up';
+    lastOffsetY.current = offsetY;
+    animHeaderBG.setValue(offsetY);
+    animHeader.setValue(offsetY);
+  };
+  const handleEndDragScroll = (offsetY: number) => {
+    if (scrollDirection.current === 'down' && offsetY < 50) {
+      scrollRefHome.current?.scrollTo({y: 50, animated: true});
+    } else if (scrollDirection.current === 'up' && offsetY < 50) {
+      scrollRefHome.current?.scrollTo({y: 0, animated: true});
+    }
+  };
+  const handleEndScroll = () => {
+    console.log('handleEndScroll', scrollDirection.current);
+    Animated.timing(animBoxLocation, {
+      toValue: scrollDirection.current === 'down' ? 1 : 0,
+      duration: 400,
+      useNativeDriver: false,
+    }).start();
+  };
   useEffect(() => {
     dispatch(getCategoryMenu());
     dispatch(getBannerHome());
     dispatch(getAllCategory());
   }, []);
-  const refreshBottomSheet = (
-    listSelect: ISelectToppingType[],
-    product: IProductType | undefined,
-  ) => {
-    let checkDefaultSize = '';
-    let checkDefaultTotalPrice = 0;
-    if (!Helper.checkZeroPrice(product?.smallPrice ?? 0)) {
-      checkDefaultSize = 'smallPrice';
-      checkDefaultTotalPrice = product?.smallPrice ?? 0;
-    } else if (!Helper.checkZeroPrice(product?.mediumPrice ?? 0)) {
-      checkDefaultSize = 'mediumPrice';
-      checkDefaultTotalPrice = product?.mediumPrice ?? 0;
-    } else {
-      checkDefaultSize = 'bigPrice';
-      checkDefaultTotalPrice = product?.bigPrice ?? 0;
-    }
-    setCheckSize(checkDefaultSize);
-    setTotalPrice(checkDefaultTotalPrice);
-    setQuantity(1);
-    setSelectTopping(listSelect);
-  };
-  const getPriceSize = (size: string) => {
-    if (size === 'smallPrice') {
-      return chooseProduct?.smallPrice ?? 0;
-    } else if (size === 'mediumPrice') {
-      return chooseProduct?.mediumPrice ?? 0;
-    }
-    return chooseProduct?.bigPrice ?? 0;
-  };
-  const getPriceCheckTopping = (listToppingChecked: ISelectToppingType[]) => {
-    let sumPriceTopping = 0;
-    listToppingChecked
-      .filter(x => x.checked)
-      .forEach(x => (sumPriceTopping += x.price));
-
-    return sumPriceTopping;
-  };
-  useEffect(() => {
-    if (
-      !Helper.isNullOrUndefined(chooseProduct) &&
-      !Helper.isNullOrUndefined(listSelectTopping)
-    ) {
-      setTotalPrice(
-        getPriceSize(checkSize) * quantity +
-          getPriceCheckTopping(listSelectTopping),
-      );
-      const data: IStoreOptionBuyProductType = {
-        productId: chooseProduct?.productId ?? 0,
-        productName: chooseProduct?.productName ?? '',
-        quantity: quantity,
-        size: checkSize,
-        listTopping: listSelectTopping.filter(x => x.checked),
-        totalPrice: totalPrice,
-        note: '',
-      };
-      dispatch(selectOptionBuy(data));
-    }
-  }, [listSelectTopping, checkSize, quantity, totalPrice]);
-
-  const setSelectTopping = (listSelect: ISelectToppingType[]) => {
-    setTotalPrice(
-      getPriceSize(checkSize) * quantity +
-        getPriceCheckTopping(listSelectTopping),
-    );
-    dispatch(selectTopping(listSelect));
-  };
-  const {
-    loading: loadingProduct,
-    error: errorProduct,
-    data: dataProduct,
-  } = useQuery<typeof getProductByCate.response>(getProductByCate.query, {
-    onCompleted(data) {
-      console.log(
-        'DATA QUERY GET PRODUCT BY CATE',
-        data?.getProductByCate,
-        getProductByCate.query,
-      );
-    },
-    onError(error) {
-      console.log('GET LINE PRODUCT BY CATE FAILED', error);
-    },
-  });
-  const {
-    loading: loadingTopping,
-    error: errorTopping,
-    data: dataToppingQL,
-  } = useQuery<typeof getAllTopping.response>(getAllTopping.query, {
-    onCompleted(data) {
-      console.log('DATA QUERY GET ALL TOPPING', data, getAllTopping.query);
-    },
-    onError(error) {
-      console.log('QUERY GET ALL TOPPING FAILED', error);
-    },
-  });
-
-  const selectProduct = (idCateName: number, idProduct: number) => {
-    const getProduct = dataProduct?.getProductByCate
-      ?.find(x => x.categoryId === idCateName)
-      ?.listProduct.find(x => x.productId === idProduct);
-    setChooseProduct(getProduct);
-    getTopping(getProduct?.iD_TypeTopping ?? [], getProduct);
-  };
-
-  const addToCart = () => {
-    dispatch(setCart(dataSelectBuy));
-    setShowBottomSheet(false);
-  };
-
-  const getTopping = async (
-    listIdTopping: number[],
-    product: IProductType | undefined,
-  ) => {
-    const listTemp = dataToppingQL?.allListTopping.filter(item =>
-      listIdTopping.includes(item.toppingId),
-    );
-    setListTopping(listTemp ?? []);
-    const listSelect = listTemp?.map((val: IToppingType) => {
-      return {...val, checked: false};
-    }) as ISelectToppingType[];
-    refreshBottomSheet(listSelect, product);
-    setSelectTopping(listSelect);
-  };
   const dataProvider = {
     animHeader,
     animHeaderBG,
     scrollRefHome,
     scrollDirection,
     lastOffsetY,
-    showBottomSheet,
-    setShowBottomSheet,
     distanceCategoryHome,
     setDistanceCategoryHome,
     dynamicHeaderAnimation,
@@ -244,22 +211,13 @@ const HomeProvider = ({children}: {children: React.ReactNode}) => {
     isLoadingBanner,
     dataCategory,
     isLoadingCategory,
-    dataProduct,
-    errorProduct,
-    loadingProduct,
-    selectProduct,
-    chooseProduct,
-    checkSize,
-    setCheckSize,
-    listTopping,
-    getTopping,
-    setSelectTopping,
-    listSelectTopping,
-    quantity,
-    setQuantity,
-    totalPrice,
-    setTotalPrice,
-    addToCart,
+    handleScroll,
+    handleEndScroll,
+    handleEndDragScroll,
+    boxLocationAnim,
+    iconAnim,
+    textLocationAnim,
+    textTitleLocationAnim,
   } as IDataHomeProvider;
   return (
     <HomeContext.Provider value={dataProvider}>{children}</HomeContext.Provider>
