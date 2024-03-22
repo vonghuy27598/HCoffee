@@ -44,17 +44,21 @@ var index_1 = require("@common/index");
 var AppBottomSheetContext = react_1.createContext({});
 var DraggableBottomSheetProvider = function (_a) {
     var children = _a.children, value = _a.value;
-    var BOTTOM_SHEET_WIDTH = index_1.Dimensions.width;
     var BOTTOM_SHEET_MAX_HEIGHT = index_1.Dimensions.height;
-    var BOTTOM_HEADER_HEIGHT = BOTTOM_SHEET_MAX_HEIGHT * 0.07;
+    var BOTTOM_SHEET_DISTANCE_HEIGHT_70 = BOTTOM_SHEET_MAX_HEIGHT * 0.2; // distance bottom sheet to status bar
+    var BOTTOM_SHEET_DISTANCE_HEIGHT_100 = 10; // distance bottom sheet to status bar
+    var BOTTOM_HEADER_HEIGHT_70 = BOTTOM_SHEET_MAX_HEIGHT * 0.07;
+    var BOTTOM_HEADER_HEIGHT_100 = BOTTOM_SHEET_MAX_HEIGHT * 0.07;
+    var BOTTOM_BODY_HEIGHT_70 = BOTTOM_SHEET_MAX_HEIGHT -
+        BOTTOM_HEADER_HEIGHT_70 -
+        BOTTOM_SHEET_DISTANCE_HEIGHT_70;
+    var BOTTOM_BODY_HEIGHT_100 = BOTTOM_SHEET_MAX_HEIGHT;
     var BOTTOM_FOOTER_HEIGHT = BOTTOM_SHEET_MAX_HEIGHT * 0.09;
-    var BOTTOM_SHEET_DISTANCE_HEIGHT = BOTTOM_SHEET_MAX_HEIGHT * 0.2; // distance bottom sheet to status bar
-    var MAX_UPWAR_TRANSLATE_Y = 0 - BOTTOM_SHEET_DISTANCE_HEIGHT; // upward translate y max height screen
+    var MAX_UPWAR_TRANSLATE_Y_70 = 0 - BOTTOM_SHEET_DISTANCE_HEIGHT_70; // upward translate y max height screen
+    var MAX_UPWAR_TRANSLATE_Y_100 = 0 - BOTTOM_SHEET_DISTANCE_HEIGHT_100; // upward translate y max height screen
     var MAX_DOWNWAR_TRANSLATE_Y = BOTTOM_SHEET_MAX_HEIGHT;
-    var BOTTOM_BODY_HEIGHT = BOTTOM_SHEET_MAX_HEIGHT -
-        BOTTOM_HEADER_HEIGHT -
-        BOTTOM_SHEET_DISTANCE_HEIGHT;
     var DRAG_THRESHOLD = 150;
+    var _b = react_1.useState(false), mainShow = _b[0], setMainShow = _b[1];
     var animatedValue = react_1.useRef(new react_native_1.Animated.Value(0)).current;
     var animatedBodyValue = react_1.useRef(new react_native_1.Animated.Value(0)).current;
     var directionDragging = react_1.useRef('');
@@ -92,9 +96,12 @@ var DraggableBottomSheetProvider = function (_a) {
     })).current;
     react_1.useEffect(function () {
         if (value.showBottomSheet) {
+            console.log('show');
+            setMainShow(true);
             animatedHideOrShow('show');
         }
         else {
+            console.log('hide');
             animatedHideOrShow('hide');
         }
     }, [value.showBottomSheet, lastGestureDy.current]);
@@ -105,8 +112,10 @@ var DraggableBottomSheetProvider = function (_a) {
                 duration: 100,
                 useNativeDriver: true
             }).start(function () {
-                if (status === 'hide')
+                if (status === 'hide') {
                     value.setShowBottomSheet(false);
+                    setMainShow(false);
+                }
             });
             return [2 /*return*/];
         });
@@ -129,8 +138,18 @@ var DraggableBottomSheetProvider = function (_a) {
         transform: [
             {
                 translateY: animatedValue.interpolate({
-                    inputRange: [MAX_UPWAR_TRANSLATE_Y, MAX_DOWNWAR_TRANSLATE_Y],
-                    outputRange: [MAX_UPWAR_TRANSLATE_Y, MAX_DOWNWAR_TRANSLATE_Y],
+                    inputRange: [
+                        value.maxHeightBottomSheet === '100%'
+                            ? MAX_UPWAR_TRANSLATE_Y_100
+                            : MAX_UPWAR_TRANSLATE_Y_70,
+                        MAX_DOWNWAR_TRANSLATE_Y,
+                    ],
+                    outputRange: [
+                        value.maxHeightBottomSheet === '100%'
+                            ? MAX_UPWAR_TRANSLATE_Y_100
+                            : MAX_UPWAR_TRANSLATE_Y_70,
+                        MAX_DOWNWAR_TRANSLATE_Y,
+                    ],
                     extrapolate: 'clamp'
                 })
             },
@@ -138,8 +157,18 @@ var DraggableBottomSheetProvider = function (_a) {
     };
     var bottomBodyContentAnimation = {
         height: animatedBodyValue.interpolate({
-            inputRange: [MAX_UPWAR_TRANSLATE_Y, 0],
-            outputRange: [MAX_DOWNWAR_TRANSLATE_Y, BOTTOM_BODY_HEIGHT],
+            inputRange: [
+                value.maxHeightBottomSheet === '100%'
+                    ? MAX_UPWAR_TRANSLATE_Y_100
+                    : MAX_UPWAR_TRANSLATE_Y_70,
+                0,
+            ],
+            outputRange: [
+                MAX_DOWNWAR_TRANSLATE_Y,
+                value.maxHeightBottomSheet === '100%'
+                    ? BOTTOM_BODY_HEIGHT_100
+                    : BOTTOM_BODY_HEIGHT_70,
+            ],
             extrapolate: 'clamp'
         })
     };
@@ -148,7 +177,12 @@ var DraggableBottomSheetProvider = function (_a) {
             {
                 translateY: animatedValue.interpolate({
                     inputRange: [0, MAX_DOWNWAR_TRANSLATE_Y - DRAG_THRESHOLD],
-                    outputRange: [0, BOTTOM_FOOTER_HEIGHT + 100],
+                    outputRange: [
+                        0,
+                        value.maxHeightBottomSheet === '100%'
+                            ? BOTTOM_FOOTER_HEIGHT
+                            : BOTTOM_FOOTER_HEIGHT + 100,
+                    ],
                     extrapolate: 'clamp'
                 })
             },
@@ -158,19 +192,13 @@ var DraggableBottomSheetProvider = function (_a) {
         showBottomSheet: value.showBottomSheet,
         animatedHideOrShow: animatedHideOrShow,
         animatedValue: animatedValue,
-        BOTTOM_FOOTER_HEIGHT: BOTTOM_FOOTER_HEIGHT,
-        BOTTOM_HEADER_HEIGHT: BOTTOM_HEADER_HEIGHT,
-        BOTTOM_SHEET_DISTANCE_HEIGHT: BOTTOM_SHEET_DISTANCE_HEIGHT,
-        BOTTOM_SHEET_MAX_HEIGHT: BOTTOM_SHEET_MAX_HEIGHT,
-        BOTTOM_SHEET_WIDTH: BOTTOM_SHEET_WIDTH,
         bottomContentAnimation: bottomContentAnimation,
         bottomFooterAnimation: bottomFooterAnimation,
         bottomBodyContentAnimation: bottomBodyContentAnimation,
-        DRAG_THRESHOLD: DRAG_THRESHOLD,
-        MAX_DOWNWAR_TRANSLATE_Y: MAX_DOWNWAR_TRANSLATE_Y,
-        MAX_UPWAR_TRANSLATE_Y: MAX_UPWAR_TRANSLATE_Y,
         panResponder: panResponder,
-        springAnimation: springAnimation
+        springAnimation: springAnimation,
+        mainShow: mainShow,
+        setMainShow: setMainShow
     };
     return (react_1["default"].createElement(AppBottomSheetContext.Provider, { value: dataProvider }, children));
 };

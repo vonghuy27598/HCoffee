@@ -3,11 +3,10 @@ import {useLineCateProduct} from '@components/FeatureLineCateProduct/Provider/Li
 import React from 'react';
 import {View} from 'react-native';
 
-const HeaderOptionBuy = () => {
-  const {chooseProduct} = useLineCateProduct();
+const HeaderOptionBuy = (productName: string) => {
   return (
     <View>
-      <AppText text={chooseProduct?.productName} textFont="bold" />
+      <AppText text={productName} textFont="bold" />
     </View>
   );
 };

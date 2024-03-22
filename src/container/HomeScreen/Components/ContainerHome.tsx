@@ -8,6 +8,8 @@ import Banner from '@components/Banner';
 import {styles} from './styles';
 import {useHome} from '../Provider/HomeProvider';
 import FeatureLineCateProduct from '@components/FeatureLineCateProduct';
+import AppDraggaleBottomSheet from '@components/Custom/AppDraggaleBottomSheet';
+import {BodyCart, FooterCart, HeaderCart} from '@components/FeatureCart';
 
 const ContainerHome = () => {
   const {
@@ -16,6 +18,8 @@ const ContainerHome = () => {
     handleScroll,
     handleEndScroll,
     handleEndDragScroll,
+    showBottomSheet,
+    setShowBottomSheet,
   } = useHome();
   console.log('RENDER CONTAINER HOME');
   return (
@@ -61,6 +65,20 @@ const ContainerHome = () => {
           <FeatureLineCateProduct />
         </View>
       </ScrollView>
+      <AppDraggaleBottomSheet
+        showBottomSheet={showBottomSheet}
+        setShowBottomSheet={setShowBottomSheet}
+        maxHeightBottomSheet="100%"
+        HeaderBottomSheetComponent={HeaderCart(
+          showBottomSheet,
+          setShowBottomSheet,
+        )}
+        BodyBottomSheetComponent={BodyCart(showBottomSheet, setShowBottomSheet)}
+        FooterBottoomSheetComponent={FooterCart(
+          showBottomSheet,
+          setShowBottomSheet,
+        )}
+      />
     </View>
   );
 };

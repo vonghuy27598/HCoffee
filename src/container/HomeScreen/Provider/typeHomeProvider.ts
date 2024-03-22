@@ -77,4 +77,6 @@ export interface IDataHomeProvider {
     )[];
     width: Animated.AnimatedInterpolation<string | number>;
   };
+  showBottomSheet: boolean;
+  setShowBottomSheet: React.Dispatch<React.SetStateAction<boolean>>;
 }

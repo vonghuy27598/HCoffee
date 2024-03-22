@@ -1,6 +1,12 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import {Animated, PanResponder} from 'react-native';
-import React, {createContext, useContext, useEffect, useRef} from 'react';
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import {IDataBottomSheetProvider} from './typeAppBottomSheetProvider';
 import {Dimensions} from '@common/index';
 import {IDraggableBottomProps} from '.';
@@ -14,18 +20,23 @@ const DraggableBottomSheetProvider = ({
   children: React.ReactNode;
   value: IDraggableBottomProps;
 }) => {
-  const BOTTOM_SHEET_WIDTH = Dimensions.width;
   const BOTTOM_SHEET_MAX_HEIGHT = Dimensions.height;
-  const BOTTOM_HEADER_HEIGHT = BOTTOM_SHEET_MAX_HEIGHT * 0.07;
-  const BOTTOM_FOOTER_HEIGHT = BOTTOM_SHEET_MAX_HEIGHT * 0.09;
-  const BOTTOM_SHEET_DISTANCE_HEIGHT = BOTTOM_SHEET_MAX_HEIGHT * 0.2; // distance bottom sheet to status bar
-  const MAX_UPWAR_TRANSLATE_Y = 0 - BOTTOM_SHEET_DISTANCE_HEIGHT; // upward translate y max height screen
-  const MAX_DOWNWAR_TRANSLATE_Y = BOTTOM_SHEET_MAX_HEIGHT;
-  const BOTTOM_BODY_HEIGHT =
+  const BOTTOM_SHEET_DISTANCE_HEIGHT_70 = BOTTOM_SHEET_MAX_HEIGHT * 0.2; // distance bottom sheet to status bar
+  const BOTTOM_SHEET_DISTANCE_HEIGHT_100 = 10; // distance bottom sheet to status bar
+  const BOTTOM_HEADER_HEIGHT_70 = BOTTOM_SHEET_MAX_HEIGHT * 0.07;
+  const BOTTOM_HEADER_HEIGHT_100 = BOTTOM_SHEET_MAX_HEIGHT * 0.07;
+  const BOTTOM_BODY_HEIGHT_70 =
     BOTTOM_SHEET_MAX_HEIGHT -
-    BOTTOM_HEADER_HEIGHT -
-    BOTTOM_SHEET_DISTANCE_HEIGHT;
+    BOTTOM_HEADER_HEIGHT_70 -
+    BOTTOM_SHEET_DISTANCE_HEIGHT_70;
+  const BOTTOM_BODY_HEIGHT_100 = BOTTOM_SHEET_MAX_HEIGHT;
+  const BOTTOM_FOOTER_HEIGHT = BOTTOM_SHEET_MAX_HEIGHT * 0.09;
+
+  const MAX_UPWAR_TRANSLATE_Y_70 = 0 - BOTTOM_SHEET_DISTANCE_HEIGHT_70; // upward translate y max height screen
+  const MAX_UPWAR_TRANSLATE_Y_100 = 0 - BOTTOM_SHEET_DISTANCE_HEIGHT_100; // upward translate y max height screen
+  const MAX_DOWNWAR_TRANSLATE_Y = BOTTOM_SHEET_MAX_HEIGHT;
   const DRAG_THRESHOLD = 150;
+  const [mainShow, setMainShow] = useState(false);
   const animatedValue = useRef(new Animated.Value(0)).current;
   const animatedBodyValue = useRef(new Animated.Value(0)).current;
   const directionDragging = useRef('');
@@ -64,8 +75,11 @@ const DraggableBottomSheetProvider = ({
   ).current;
   useEffect(() => {
     if (value.showBottomSheet) {
+      console.log('show');
+      setMainShow(true);
       animatedHideOrShow('show');
     } else {
+      console.log('hide');
       animatedHideOrShow('hide');
     }
   }, [value.showBottomSheet, lastGestureDy.current]);
@@ -75,7 +89,10 @@ const DraggableBottomSheetProvider = ({
       duration: 100,
       useNativeDriver: true,
     }).start(() => {
-      if (status === 'hide') value.setShowBottomSheet!(false);
+      if (status === 'hide') {
+        value.setShowBottomSheet!(false);
+        setMainShow(false);
+      }
     });
   };
   const springAnimation = (direction: 'up' | 'down') => {
@@ -97,8 +114,18 @@ const DraggableBottomSheetProvider = ({
     transform: [
       {
         translateY: animatedValue.interpolate({
-          inputRange: [MAX_UPWAR_TRANSLATE_Y, MAX_DOWNWAR_TRANSLATE_Y],
-          outputRange: [MAX_UPWAR_TRANSLATE_Y, MAX_DOWNWAR_TRANSLATE_Y],
+          inputRange: [
+            value.maxHeightBottomSheet === '100%'
+              ? MAX_UPWAR_TRANSLATE_Y_100
+              : MAX_UPWAR_TRANSLATE_Y_70,
+            MAX_DOWNWAR_TRANSLATE_Y,
+          ],
+          outputRange: [
+            value.maxHeightBottomSheet === '100%'
+              ? MAX_UPWAR_TRANSLATE_Y_100
+              : MAX_UPWAR_TRANSLATE_Y_70,
+            MAX_DOWNWAR_TRANSLATE_Y,
+          ],
           extrapolate: 'clamp',
         }),
       },
@@ -106,8 +133,18 @@ const DraggableBottomSheetProvider = ({
   };
   const bottomBodyContentAnimation = {
     height: animatedBodyValue.interpolate({
-      inputRange: [MAX_UPWAR_TRANSLATE_Y, 0],
-      outputRange: [MAX_DOWNWAR_TRANSLATE_Y, BOTTOM_BODY_HEIGHT],
+      inputRange: [
+        value.maxHeightBottomSheet === '100%'
+          ? MAX_UPWAR_TRANSLATE_Y_100
+          : MAX_UPWAR_TRANSLATE_Y_70,
+        0,
+      ],
+      outputRange: [
+        MAX_DOWNWAR_TRANSLATE_Y,
+        value.maxHeightBottomSheet === '100%'
+          ? BOTTOM_BODY_HEIGHT_100
+          : BOTTOM_BODY_HEIGHT_70,
+      ],
       extrapolate: 'clamp',
     }),
     // transform: [
@@ -132,7 +169,12 @@ const DraggableBottomSheetProvider = ({
       {
         translateY: animatedValue.interpolate({
           inputRange: [0, MAX_DOWNWAR_TRANSLATE_Y - DRAG_THRESHOLD],
-          outputRange: [0, BOTTOM_FOOTER_HEIGHT + 100],
+          outputRange: [
+            0,
+            value.maxHeightBottomSheet === '100%'
+              ? BOTTOM_FOOTER_HEIGHT
+              : BOTTOM_FOOTER_HEIGHT + 100,
+          ],
           extrapolate: 'clamp',
         }),
       },
@@ -143,19 +185,13 @@ const DraggableBottomSheetProvider = ({
     showBottomSheet: value.showBottomSheet,
     animatedHideOrShow,
     animatedValue,
-    BOTTOM_FOOTER_HEIGHT,
-    BOTTOM_HEADER_HEIGHT,
-    BOTTOM_SHEET_DISTANCE_HEIGHT,
-    BOTTOM_SHEET_MAX_HEIGHT,
-    BOTTOM_SHEET_WIDTH,
     bottomContentAnimation,
     bottomFooterAnimation,
     bottomBodyContentAnimation,
-    DRAG_THRESHOLD,
-    MAX_DOWNWAR_TRANSLATE_Y,
-    MAX_UPWAR_TRANSLATE_Y,
     panResponder,
     springAnimation,
+    mainShow,
+    setMainShow,
   } as IDataBottomSheetProvider;
   return (
     <AppBottomSheetContext.Provider value={dataProvider}>

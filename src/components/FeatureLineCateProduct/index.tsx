@@ -2,7 +2,7 @@ import React from 'react';
 import {LineCateProductProvider} from './Provider/LineCateProductProvider';
 import BoxCategory from './Component/BoxCategory';
 import LineProductByCate from './Component/LineProductByCate';
-import ShowBottomSheet from './Component/ShotBottomSheet';
+import ShowBottomSheet from './Component/ShowBottomSheet';
 
 const FeatureLineCateProduct = () => {
   return (

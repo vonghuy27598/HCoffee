@@ -28,6 +28,7 @@ const OrderProvider = ({children}: {children: React.ReactNode}) => {
   const animHeader = useRef(new Animated.Value(0)).current;
   const [headerCateName, setHeaderCateName] = useState('Danh mục');
   const diffClampTranslate = Animated.diffClamp(animHeader, 0, 60);
+  const [showBottomSheetOrder, setShowBottomSheetOrder] = useState(false);
   // const diffClampOpacity = Animated.diffClamp(animHeader, 0, 60).interpolate({
   //   inputRange: [0, 60],
   //   outputRange: [60, 0],
@@ -222,6 +223,8 @@ const OrderProvider = ({children}: {children: React.ReactNode}) => {
     iconAnimOrder,
     textLocationAnimOrder,
     textTitleLocationAnimOrder,
+    showBottomSheetOrder,
+    setShowBottomSheetOrder,
   } as IOrderProviderType;
 
   return <OrderContext.Provider value={data}>{children}</OrderContext.Provider>;

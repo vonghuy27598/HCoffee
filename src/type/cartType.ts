@@ -7,6 +7,7 @@ export interface IStoreOptionBuyProductType {
   quantity: number;
   listTopping: ISelectToppingType[];
   totalPrice: number;
+  iD_Cate: number;
   note: string;
 }
 

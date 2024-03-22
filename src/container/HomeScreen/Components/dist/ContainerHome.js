@@ -10,8 +10,10 @@ var Banner_1 = require("@components/Banner");
 var styles_1 = require("./styles");
 var HomeProvider_1 = require("../Provider/HomeProvider");
 var FeatureLineCateProduct_1 = require("@components/FeatureLineCateProduct");
+var AppDraggaleBottomSheet_1 = require("@components/Custom/AppDraggaleBottomSheet");
+var FeatureCart_1 = require("@components/FeatureCart");
 var ContainerHome = function () {
-    var _a = HomeProvider_1.useHome(), scrollRefHome = _a.scrollRefHome, setDistanceCategoryHome = _a.setDistanceCategoryHome, handleScroll = _a.handleScroll, handleEndScroll = _a.handleEndScroll, handleEndDragScroll = _a.handleEndDragScroll;
+    var _a = HomeProvider_1.useHome(), scrollRefHome = _a.scrollRefHome, setDistanceCategoryHome = _a.setDistanceCategoryHome, handleScroll = _a.handleScroll, handleEndScroll = _a.handleEndScroll, handleEndDragScroll = _a.handleEndDragScroll, showBottomSheet = _a.showBottomSheet, setShowBottomSheet = _a.setShowBottomSheet;
     console.log('RENDER CONTAINER HOME');
     return (react_1["default"].createElement(react_native_1.View, null,
         react_1["default"].createElement(react_native_1.ScrollView, { ref: scrollRefHome, onScroll: function (e) {
@@ -38,6 +40,7 @@ var ContainerHome = function () {
                 } },
                 react_1["default"].createElement(CategoryMenu_1["default"], null),
                 react_1["default"].createElement(Banner_1["default"], null),
-                react_1["default"].createElement(FeatureLineCateProduct_1["default"], null)))));
+                react_1["default"].createElement(FeatureLineCateProduct_1["default"], null))),
+        react_1["default"].createElement(AppDraggaleBottomSheet_1["default"], { showBottomSheet: showBottomSheet, setShowBottomSheet: setShowBottomSheet, maxHeightBottomSheet: "100%", HeaderBottomSheetComponent: FeatureCart_1.HeaderCart(showBottomSheet, setShowBottomSheet), BodyBottomSheetComponent: FeatureCart_1.BodyCart(showBottomSheet, setShowBottomSheet), FooterBottoomSheetComponent: FeatureCart_1.FooterCart(showBottomSheet, setShowBottomSheet) })));
 };
 exports["default"] = ContainerHome;

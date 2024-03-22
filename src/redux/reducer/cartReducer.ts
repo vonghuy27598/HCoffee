@@ -53,8 +53,8 @@ export const setCartReducer = (
     case typeCartACtion.ACTION_SET_CART:
       return {
         ...state,
-        idCart: Date.now(),
-        listProduct: [...state.listProduct, payload],
+        idCart: payload.idCart,
+        listProduct: payload.listProduct,
       };
     default:
       return state;

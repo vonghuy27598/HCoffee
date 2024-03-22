@@ -23,7 +23,8 @@ var HomeProvider = function (_a) {
     var scrollRefHome = react_1.useRef(null);
     var scrollDirection = react_1.useRef('');
     var lastOffsetY = react_1.useRef(0);
-    var _b = react_1.useState(0), distanceCategoryHome = _b[0], setDistanceCategoryHome = _b[1];
+    var _b = react_1.useState(false), showBottomSheet = _b[0], setShowBottomSheet = _b[1];
+    var _c = react_1.useState(0), distanceCategoryHome = _c[0], setDistanceCategoryHome = _c[1];
     var dynamicHeaderAnimation = {
         backgroundColor: animHeaderBG.interpolate({
             inputRange: [0, 80],
@@ -152,9 +153,9 @@ var HomeProvider = function (_a) {
         })
     };
     var dispatch = react_redux_1.useDispatch();
-    var _c = react_redux_1.useSelector(function (state) { return state.getCategoryMenuReducer; }), dataMenu = _c.dataMenu, isLoadingMenu = _c.isLoadingMenu;
-    var _d = react_redux_1.useSelector(function (state) { return state.getBannerHomeReducer; }), arrayImage = _d.arrayImage, isLoadingBanner = _d.isLoadingBanner;
-    var _e = react_redux_1.useSelector(function (state) { return state.getCategoryReducer; }), dataCategory = _e.dataCategory, isLoadingCategory = _e.isLoadingCategory;
+    var _d = react_redux_1.useSelector(function (state) { return state.getCategoryMenuReducer; }), dataMenu = _d.dataMenu, isLoadingMenu = _d.isLoadingMenu;
+    var _e = react_redux_1.useSelector(function (state) { return state.getBannerHomeReducer; }), arrayImage = _e.arrayImage, isLoadingBanner = _e.isLoadingBanner;
+    var _f = react_redux_1.useSelector(function (state) { return state.getCategoryReducer; }), dataCategory = _f.dataCategory, isLoadingCategory = _f.isLoadingCategory;
     var handleScroll = function (offsetY) {
         scrollDirection.current = offsetY - lastOffsetY.current > 0 ? 'down' : 'up';
         lastOffsetY.current = offsetY;
@@ -206,7 +207,9 @@ var HomeProvider = function (_a) {
         boxLocationAnim: boxLocationAnim,
         iconAnim: iconAnim,
         textLocationAnim: textLocationAnim,
-        textTitleLocationAnim: textTitleLocationAnim
+        textTitleLocationAnim: textTitleLocationAnim,
+        showBottomSheet: showBottomSheet,
+        setShowBottomSheet: setShowBottomSheet
     };
     return (react_1["default"].createElement(HomeContext.Provider, { value: dataProvider }, children));
 };

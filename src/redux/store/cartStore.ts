@@ -8,6 +8,7 @@ export const selectToppingStore: IStoreSelectToppingType = {
 export const optionBuyProductStore: IStoreOptionBuyProductType = {
   productId: 0,
   productName: '',
+  iD_Cate: 0,
   size: '',
   quantity: 0,
   listTopping: [],

@@ -4,9 +4,17 @@ import FeatureLineCateProduct from '@components/FeatureLineCateProduct';
 import PaddingHeader from '@components/PaddingHeader';
 import {styles} from './styles';
 import {useOrder} from '../Provider/OrderProvider';
+import AppDraggaleBottomSheet from '@components/Custom/AppDraggaleBottomSheet';
+import {BodyCart, FooterCart, HeaderCart} from '@components/FeatureCart';
 
 const ContainerOder = () => {
-  const {scrollOrderRef, handleScroll, handleSnap} = useOrder();
+  const {
+    scrollOrderRef,
+    handleScroll,
+    handleSnap,
+    showBottomSheetOrder,
+    setShowBottomSheetOrder,
+  } = useOrder();
   return (
     <Animated.ScrollView
       ref={scrollOrderRef}
@@ -22,6 +30,23 @@ const ContainerOder = () => {
       }}>
       <PaddingHeader />
       <FeatureLineCateProduct />
+      <AppDraggaleBottomSheet
+        showBottomSheet={showBottomSheetOrder}
+        setShowBottomSheet={setShowBottomSheetOrder}
+        maxHeightBottomSheet="100%"
+        HeaderBottomSheetComponent={HeaderCart(
+          showBottomSheetOrder,
+          setShowBottomSheetOrder,
+        )}
+        BodyBottomSheetComponent={BodyCart(
+          showBottomSheetOrder,
+          setShowBottomSheetOrder,
+        )}
+        FooterBottoomSheetComponent={FooterCart(
+          showBottomSheetOrder,
+          setShowBottomSheetOrder,
+        )}
+      />
     </Animated.ScrollView>
   );
 };

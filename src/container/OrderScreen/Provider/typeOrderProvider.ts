@@ -60,4 +60,6 @@ export interface IOrderProviderType {
     )[];
     width: Animated.AnimatedInterpolation<string | number>;
   };
+  showBottomSheetOrder: boolean;
+  setShowBottomSheetOrder: React.Dispatch<React.SetStateAction<boolean>>;
 }

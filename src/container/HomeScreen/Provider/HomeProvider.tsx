@@ -29,6 +29,7 @@ const HomeProvider = ({children}: {children: React.ReactNode}) => {
   const scrollRefHome = useRef<ScrollView>(null);
   const scrollDirection = useRef('');
   const lastOffsetY = useRef(0);
+  const [showBottomSheet, setShowBottomSheet] = useState(false);
   const [distanceCategoryHome, setDistanceCategoryHome] = useState<number>(0);
   const dynamicHeaderAnimation = {
     backgroundColor: animHeaderBG.interpolate({
@@ -218,6 +219,8 @@ const HomeProvider = ({children}: {children: React.ReactNode}) => {
     iconAnim,
     textLocationAnim,
     textTitleLocationAnim,
+    showBottomSheet,
+    setShowBottomSheet,
   } as IDataHomeProvider;
   return (
     <HomeContext.Provider value={dataProvider}>{children}</HomeContext.Provider>

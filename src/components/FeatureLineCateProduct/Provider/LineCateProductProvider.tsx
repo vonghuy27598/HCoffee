@@ -34,14 +34,14 @@ const LineCateProductProvider = ({children}: {children: React.ReactNode}) => {
   const {scrollOrderRef} = useOrder();
   const [showBottomSheet, setShowBottomSheet] = useState(false);
   const [chooseProduct, setChooseProduct] = useState<IProductType>();
-  const [listTopping, setListTopping] = useState<IToppingType[]>([]);
-  const [checkSize, setCheckSize] = useState(
-    !Helper.checkZeroPrice(chooseProduct?.smallPrice ?? 0)
-      ? 'smallPrice'
-      : 'mediumPrice',
-  );
-  const [quantity, setQuantity] = useState<number>(1);
-  const [totalPrice, setTotalPrice] = useState<number>(0);
+
+  // const [checkSize, setCheckSize] = useState(
+  //   !Helper.checkZeroPrice(chooseProduct?.smallPrice ?? 0)
+  //     ? 'smallPrice'
+  //     : 'mediumPrice',
+  // );
+  // const [quantity, setQuantity] = useState<number>(1);
+  // const [totalPrice, setTotalPrice] = useState<number>(0);
   const navigate = useNavigation();
   const indexCurrentScreen = navigate.getState().index;
   const currentScreen = useRef('');
@@ -62,78 +62,58 @@ const LineCateProductProvider = ({children}: {children: React.ReactNode}) => {
   const {dataPosition} = useSelector(
     (state: RootState) => state.setPositionCategory,
   );
-  const dataSelectBuy = useSelector(
-    (state: RootState) => state.selectOptionBuyReducer,
-  );
-  const {listSelectTopping} = useSelector(
-    (state: RootState) => state.selectToppingReducer,
-  );
-  const refreshBottomSheet = (
-    listSelect: ISelectToppingType[],
-    product: IProductType | undefined,
-  ) => {
-    let checkDefaultSize = '';
-    let checkDefaultTotalPrice = 0;
-    if (!Helper.checkZeroPrice(product?.smallPrice ?? 0)) {
-      checkDefaultSize = 'smallPrice';
-      checkDefaultTotalPrice = product?.smallPrice ?? 0;
-    } else if (!Helper.checkZeroPrice(product?.mediumPrice ?? 0)) {
-      checkDefaultSize = 'mediumPrice';
-      checkDefaultTotalPrice = product?.mediumPrice ?? 0;
-    } else {
-      checkDefaultSize = 'bigPrice';
-      checkDefaultTotalPrice = product?.bigPrice ?? 0;
-    }
-    setCheckSize(checkDefaultSize);
-    setTotalPrice(checkDefaultTotalPrice);
-    setQuantity(1);
-    setSelectTopping(listSelect);
-  };
-  const getPriceSize = (size: string) => {
-    if (size === 'smallPrice') {
-      return chooseProduct?.smallPrice ?? 0;
-    } else if (size === 'mediumPrice') {
-      return chooseProduct?.mediumPrice ?? 0;
-    }
-    return chooseProduct?.bigPrice ?? 0;
-  };
-  const getPriceCheckTopping = (listToppingChecked: ISelectToppingType[]) => {
-    let sumPriceTopping = 0;
-    listToppingChecked
-      .filter(x => x.checked)
-      .forEach(x => (sumPriceTopping += x.price));
+  // const dataSelectBuy = useSelector(
+  //   (state: RootState) => state.selectOptionBuyReducer,
+  // );
+  // const {listSelectTopping} = useSelector(
+  //   (state: RootState) => state.selectToppingReducer,
+  // );
 
-    return sumPriceTopping;
-  };
-  useEffect(() => {
-    if (
-      !Helper.isNullOrUndefined(chooseProduct) &&
-      !Helper.isNullOrUndefined(listSelectTopping)
-    ) {
-      setTotalPrice(
-        getPriceSize(checkSize) * quantity +
-          getPriceCheckTopping(listSelectTopping),
-      );
-      const data: IStoreOptionBuyProductType = {
-        productId: chooseProduct?.productId ?? 0,
-        productName: chooseProduct?.productName ?? '',
-        quantity: quantity,
-        size: checkSize,
-        listTopping: listSelectTopping.filter(x => x.checked),
-        totalPrice: totalPrice,
-        note: '',
-      };
-      dispatch(selectOptionBuy(data));
-    }
-  }, [listSelectTopping, checkSize, quantity, totalPrice]);
+  // const getPriceSize = (size: string) => {
+  //   if (size === 'smallPrice') {
+  //     return chooseProduct?.smallPrice ?? 0;
+  //   } else if (size === 'mediumPrice') {
+  //     return chooseProduct?.mediumPrice ?? 0;
+  //   }
+  //   return chooseProduct?.bigPrice ?? 0;
+  // };
+  // const getPriceCheckTopping = (listToppingChecked: ISelectToppingType[]) => {
+  //   let sumPriceTopping = 0;
+  //   listToppingChecked
+  //     .filter(x => x.checked)
+  //     .forEach(x => (sumPriceTopping += x.price));
 
-  const setSelectTopping = (listSelect: ISelectToppingType[]) => {
-    setTotalPrice(
-      getPriceSize(checkSize) * quantity +
-        getPriceCheckTopping(listSelectTopping),
-    );
-    dispatch(selectTopping(listSelect));
-  };
+  //   return sumPriceTopping;
+  // };
+  // useEffect(() => {
+  //   if (
+  //     !Helper.isNullOrUndefined(chooseProduct) &&
+  //     !Helper.isNullOrUndefined(listSelectTopping)
+  //   ) {
+  //     setTotalPrice(
+  //       getPriceSize(checkSize) * quantity +
+  //         getPriceCheckTopping(listSelectTopping),
+  //     );
+  //     const data: IStoreOptionBuyProductType = {
+  //       productId: chooseProduct?.productId ?? 0,
+  //       productName: chooseProduct?.productName ?? '',
+  //       quantity: quantity,
+  //       size: checkSize,
+  //       listTopping: listSelectTopping.filter(x => x.checked),
+  //       totalPrice: totalPrice,
+  //       note: '',
+  //     };
+  //     dispatch(selectOptionBuy(data));
+  //   }
+  // }, [listSelectTopping, checkSize, quantity, totalPrice]);
+
+  // const setSelectTopping = (listSelect: ISelectToppingType[]) => {
+  //   setTotalPrice(
+  //     getPriceSize(checkSize) * quantity +
+  //       getPriceCheckTopping(listSelectTopping),
+  //   );
+  //   dispatch(selectTopping(listSelect));
+  // };
   const handleChooseCategory = (itemIndex: number) => {
     const temp = dataPosition.find(x => x.screenName === currentScreen.current);
     let offSetY = temp?.listPosition[itemIndex].layout ?? 0; // set default offsetY = first position line cate
@@ -176,11 +156,7 @@ const LineCateProductProvider = ({children}: {children: React.ReactNode}) => {
       console.log('GET LINE PRODUCT BY CATE FAILED', error);
     },
   });
-  const {
-    loading: loadingTopping,
-    error: errorTopping,
-    data: dataToppingQL,
-  } = useQuery<typeof getAllTopping.response>(getAllTopping.query, {
+  useQuery<typeof getAllTopping.response>(getAllTopping.query, {
     onCompleted(data) {
       console.log('DATA QUERY GET ALL TOPPING', data, getAllTopping.query);
     },
@@ -193,29 +169,30 @@ const LineCateProductProvider = ({children}: {children: React.ReactNode}) => {
     const getProduct = dataProduct?.getProductByCate
       ?.find(x => x.categoryId === idCateName)
       ?.listProduct.find(x => x.productId === idProduct);
+    setShowBottomSheet(true);
     setChooseProduct(getProduct);
-    getTopping(getProduct?.iD_TypeTopping ?? [], getProduct);
+    // getTopping(getProduct?.iD_TypeTopping ?? [], getProduct);
   };
 
-  const addToCart = () => {
-    dispatch(setCart(dataSelectBuy));
-    setShowBottomSheet(false);
-  };
+  // const addToCart = () => {
+  //   dispatch(setCart(dataSelectBuy));
+  //   setShowBottomSheet(false);
+  // };
 
-  const getTopping = async (
-    listIdTopping: number[],
-    product: IProductType | undefined,
-  ) => {
-    const listTemp = dataToppingQL?.allListTopping.filter(item =>
-      listIdTopping.includes(item.toppingId),
-    );
-    setListTopping(listTemp ?? []);
-    const listSelect = listTemp?.map((val: IToppingType) => {
-      return {...val, checked: false};
-    }) as ISelectToppingType[];
-    refreshBottomSheet(listSelect, product);
-    setSelectTopping(listSelect);
-  };
+  // const getTopping = async (
+  //   listIdTopping: number[],
+  //   product: IProductType | undefined,
+  // ) => {
+  //   const listTemp = dataToppingQL?.allListTopping.filter(item =>
+  //     listIdTopping.includes(item.toppingId),
+  //   );
+  //   setListTopping(listTemp ?? []);
+  //   const listSelect = listTemp?.map((val: IToppingType) => {
+  //     return {...val, checked: false};
+  //   }) as ISelectToppingType[];
+  //   refreshBottomSheet(listSelect, product);
+  //   setSelectTopping(listSelect);
+  // };
   useEffect(() => {
     if (arrPosition.length > 0 && arrPosition.length === dataCategory.length) {
       dispatch(
@@ -269,18 +246,18 @@ const LineCateProductProvider = ({children}: {children: React.ReactNode}) => {
     setHeightBoxCate,
     selectProduct,
     chooseProduct,
-    checkSize,
-    setCheckSize,
-    listTopping,
-    setListTopping,
-    getTopping,
-    setSelectTopping,
-    listSelectTopping,
-    quantity,
-    setQuantity,
-    totalPrice,
-    setTotalPrice,
-    addToCart,
+    // checkSize,
+    // setCheckSize,
+    // listTopping,
+    // setListTopping,
+    // getTopping,
+    // setSelectTopping,
+    // listSelectTopping,
+    // quantity,
+    // setQuantity,
+    // totalPrice,
+    // setTotalPrice,
+    // addToCart,
     showBottomSheet,
     setShowBottomSheet,
     setHeightLineCate,

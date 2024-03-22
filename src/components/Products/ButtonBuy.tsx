@@ -15,7 +15,7 @@ const ButtonBuy = ({product}: IProps) => {
     <TouchableOpacity
       style={styles.btnBuy}
       onPress={() => {
-        setShowBottomSheet(true);
+        // setShowBottomSheet(true);
         selectProduct(product.iD_Cate, product.productId);
       }}>
       <Icon name="plus" color={COLORS.WHITE_COLOR} size={20} />

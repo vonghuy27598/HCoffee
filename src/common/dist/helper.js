@@ -1,6 +1,6 @@
 "use strict";
 exports.__esModule = true;
-exports.getCloser = exports.formatWrapLineSpace = exports.formatPrice = exports.createAction = exports.checkLessThanOneSize = exports.checkZeroPrice = exports.isNullOrUndefined = void 0;
+exports.getCloser = exports.formatWrapLineSpace = exports.formatSize = exports.getPriceCheckTopping = exports.getPriceSize = exports.formatPrice = exports.createAction = exports.isObjectEqual = exports.isArrayEquals = exports.getFirstSize = exports.checkLessThanOneSize = exports.checkZeroPrice = exports.isNullOrUndefined = void 0;
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 exports.isNullOrUndefined = function (value) {
     if (value === null)
@@ -24,6 +24,32 @@ exports.checkLessThanOneSize = function (arrSize) {
         return true;
     return false;
 };
+exports.getFirstSize = function (smallPrice, mediumPrice) {
+    if (smallPrice > 0) {
+        return 'smallPrice';
+    }
+    else if (mediumPrice > 0) {
+        return 'mediumPrice';
+    }
+    return 'bigPrice';
+};
+exports.isArrayEquals = function (arr1, arr2) {
+    if (arr1.length !== arr2.length) {
+        return false;
+    }
+    return arr1.every(function (obj1, index) {
+        var obj2 = arr2[index];
+        return exports.isObjectEqual(obj1, obj2);
+    });
+};
+exports.isObjectEqual = function (obj1, obj2) {
+    var keys1 = Object.keys(obj1);
+    var keys2 = Object.keys(obj2);
+    if (keys1.length !== keys2.length) {
+        return false;
+    }
+    return keys1.every(function (key) { return obj1[key] === obj2[key]; });
+};
 exports.createAction = function (type, payload) { return ({
     type: type,
     payload: payload
@@ -34,6 +60,35 @@ exports.formatPrice = function (price) {
     }
     catch (_a) {
         return "" + price;
+    }
+};
+exports.getPriceSize = function (size, selectProduct) {
+    var _a, _b, _c;
+    if (size === 'smallPrice') {
+        return (_a = selectProduct === null || selectProduct === void 0 ? void 0 : selectProduct.smallPrice) !== null && _a !== void 0 ? _a : 0;
+    }
+    else if (size === 'mediumPrice') {
+        return (_b = selectProduct === null || selectProduct === void 0 ? void 0 : selectProduct.mediumPrice) !== null && _b !== void 0 ? _b : 0;
+    }
+    return (_c = selectProduct === null || selectProduct === void 0 ? void 0 : selectProduct.bigPrice) !== null && _c !== void 0 ? _c : 0;
+};
+exports.getPriceCheckTopping = function (listToppingChecked) {
+    var sumPriceTopping = 0;
+    listToppingChecked
+        .filter(function (x) { return x.checked; })
+        .forEach(function (x) { return (sumPriceTopping += x.price); });
+    return sumPriceTopping;
+};
+exports.formatSize = function (typeSize) {
+    switch (typeSize) {
+        case 'smallPrice':
+            return 'Nhỏ';
+        case 'mediumPrice':
+            return 'Vừa';
+        case 'bigPrice':
+            return 'Lớn';
+        default:
+            return 'Vừa';
     }
 };
 //#region format wrap text by line

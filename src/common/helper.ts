@@ -1,3 +1,6 @@
+import {IProductType} from '@type/productType';
+import {ISelectToppingType} from '@type/toppingType';
+
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 export const isNullOrUndefined = (value: any) => {
   if (value === null) return true;
@@ -18,6 +21,37 @@ export const checkLessThanOneSize = (arrSize: number[]) => {
   return false;
 };
 
+export const getFirstSize = (smallPrice: number, mediumPrice: number) => {
+  if (smallPrice > 0) {
+    return 'smallPrice';
+  } else if (mediumPrice > 0) {
+    return 'mediumPrice';
+  }
+  return 'bigPrice';
+};
+
+export const isArrayEquals = (arr1: any[], arr2: any[]): boolean => {
+  if (arr1.length !== arr2.length) {
+    return false;
+  }
+
+  return arr1.every((obj1, index) => {
+    const obj2 = arr2[index];
+    return isObjectEqual(obj1, obj2);
+  });
+};
+
+export const isObjectEqual = (obj1: any, obj2: any): boolean => {
+  const keys1 = Object.keys(obj1);
+  const keys2 = Object.keys(obj2);
+
+  if (keys1.length !== keys2.length) {
+    return false;
+  }
+
+  return keys1.every(key => obj1[key] === obj2[key]);
+};
+
 export const createAction = (type: string, payload?: any) => ({
   type,
   payload,
@@ -27,6 +61,42 @@ export const formatPrice = (price: number) => {
     return `${price.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.')}đ`;
   } catch {
     return `${price}`;
+  }
+};
+
+export const getPriceSize = (
+  size: string,
+  selectProduct: IProductType | undefined,
+) => {
+  if (size === 'smallPrice') {
+    return selectProduct?.smallPrice ?? 0;
+  } else if (size === 'mediumPrice') {
+    return selectProduct?.mediumPrice ?? 0;
+  }
+  return selectProduct?.bigPrice ?? 0;
+};
+export const getPriceCheckTopping = (
+  listToppingChecked: ISelectToppingType[],
+) => {
+  let sumPriceTopping = 0;
+  listToppingChecked
+    .filter(x => x.checked)
+    .forEach(x => (sumPriceTopping += x.price));
+
+  return sumPriceTopping;
+};
+export const formatSize = (
+  typeSize: 'smallPrice' | 'mediumPrice' | 'bigPrice' | string,
+) => {
+  switch (typeSize) {
+    case 'smallPrice':
+      return 'Nhỏ';
+    case 'mediumPrice':
+      return 'Vừa';
+    case 'bigPrice':
+      return 'Lớn';
+    default:
+      return 'Vừa';
   }
 };
 

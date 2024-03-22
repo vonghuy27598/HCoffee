@@ -21,6 +21,7 @@ var OrderProvider = function (_a) {
     var animHeader = react_1.useRef(new react_native_1.Animated.Value(0)).current;
     var _b = react_1.useState('Danh mục'), headerCateName = _b[0], setHeaderCateName = _b[1];
     var diffClampTranslate = react_native_1.Animated.diffClamp(animHeader, 0, 60);
+    var _c = react_1.useState(false), showBottomSheetOrder = _c[0], setShowBottomSheetOrder = _c[1];
     // const diffClampOpacity = Animated.diffClamp(animHeader, 0, 60).interpolate({
     //   inputRange: [0, 60],
     //   outputRange: [60, 0],
@@ -207,7 +208,9 @@ var OrderProvider = function (_a) {
         boxLocationAnimOrder: boxLocationAnimOrder,
         iconAnimOrder: iconAnimOrder,
         textLocationAnimOrder: textLocationAnimOrder,
-        textTitleLocationAnimOrder: textTitleLocationAnimOrder
+        textTitleLocationAnimOrder: textTitleLocationAnimOrder,
+        showBottomSheetOrder: showBottomSheetOrder,
+        setShowBottomSheetOrder: setShowBottomSheetOrder
     };
     return react_1["default"].createElement(OrderContext.Provider, { value: data }, children);
 };
