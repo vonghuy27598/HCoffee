@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("HCoffeeWebAPI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4fa90cee0c6a706feb30f8dfe2fa66a748df89ed")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4c419a0505809389afd1dc4587337259488ec3ad")]
 [assembly: System.Reflection.AssemblyProductAttribute("HCoffeeWebAPI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("HCoffeeWebAPI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

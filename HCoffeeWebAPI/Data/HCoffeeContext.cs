@@ -22,6 +22,7 @@ namespace HCoffeeWebAPI.Data
         public DbSet<CartDetail> CartDetail { get; set; }
         public DbSet<ListProductInCart> ListProductInCart { get; set; }
         public DbSet<Notification> Notification { get; set; }
+        public DbSet<RefreshToken> RefreshToken { get; set; }
         #endregion
     }
 }

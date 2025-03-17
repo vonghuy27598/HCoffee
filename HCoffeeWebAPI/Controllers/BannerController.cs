@@ -1,6 +1,5 @@
 ﻿using HCoffeeWebAPI.Models;
 using HCoffeeWebAPI.Repositories.Interface;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HCoffeeWebAPI.Controllers
@@ -19,6 +18,7 @@ namespace HCoffeeWebAPI.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllBanner()
         {
+            //
             try
             {
                 var listBanner = await _repo.GetAllBanner();

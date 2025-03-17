@@ -16,6 +16,6 @@ namespace HCoffeeWebAPI.Data
         public string NoteOrder {  get; set; }
         public int StatusCodeOrder { get; set; } // 101 pending; 102 delivery; 103 success; -1 error
         [ForeignKey("OrderId")]
-        public OrderDetail OrderDetail { get; set; }
+        public List<OrderDetail> OrderDetail { get; set; }
     }
 }

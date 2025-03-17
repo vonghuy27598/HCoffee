@@ -13,7 +13,8 @@ namespace HCoffeeWebAPI.Data
         public double TotalPriceOrder { get; set; }
         public double TotalQuantityOrder { get; set; }
         public double TotalPriceShip { get; set; }
-        public int OrderId { get; set; }
+        [ForeignKey("OrderDetailId")]
+        public List<ListProductChoose> ListProductChooses { get; set; }
     }
     public class ListProductChoose
     {
@@ -28,8 +29,6 @@ namespace HCoffeeWebAPI.Data
         public double Quantity { get; set; }
         public double TotalPrice { get; set; }
         public string NoteProduct { get; set; }
-        [ForeignKey("OrderDetailId")]
-        public OrderDetail OrderDetail { get; set; }
     }
 
 }

@@ -154,3 +154,7 @@ C:\Users\PC\Desktop\trainningCode\WebAPI\HCoffeeWebAPI\HCoffeeWebAPI\bin\Release
 C:\Users\PC\Desktop\trainningCode\WebAPI\HCoffeeWebAPI\HCoffeeWebAPI\bin\Release\net8.0\Microsoft.Extensions.Options.dll
 C:\Users\PC\Desktop\trainningCode\WebAPI\HCoffeeWebAPI\HCoffeeWebAPI\bin\Release\net8.0\Newtonsoft.Json.dll
 C:\Users\PC\Desktop\trainningCode\WebAPI\HCoffeeWebAPI\HCoffeeWebAPI\bin\Release\net8.0\Twilio.dll
+C:\Users\PC\Desktop\trainningCode\WebAPI\HCoffeeWebAPI\HCoffeeWebAPI\bin\Release\net8.0\Infobip.Api.SDK.dll
+C:\Users\PC\Desktop\trainningCode\WebAPI\HCoffeeWebAPI\HCoffeeWebAPI\bin\Release\net8.0\JsonSubTypes.dll
+C:\Users\PC\Desktop\trainningCode\WebAPI\HCoffeeWebAPI\HCoffeeWebAPI\bin\Release\net8.0\System.Net.Http.Formatting.dll
+C:\Users\PC\Desktop\trainningCode\WebAPI\HCoffeeWebAPI\HCoffeeWebAPI\bin\Release\net8.0\Newtonsoft.Json.Bson.dll

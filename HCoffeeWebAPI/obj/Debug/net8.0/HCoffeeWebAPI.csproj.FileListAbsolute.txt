@@ -154,3 +154,7 @@ C:\Users\PC\Desktop\trainningCode\WebAPI\HCoffeeWebAPI\HCoffeeWebAPI\bin\Debug\n
 C:\Users\PC\Desktop\trainningCode\WebAPI\HCoffeeWebAPI\HCoffeeWebAPI\bin\Debug\net8.0\Google.Apis.Auth.PlatformServices.dll
 C:\Users\PC\Desktop\trainningCode\WebAPI\HCoffeeWebAPI\HCoffeeWebAPI\bin\Debug\net8.0\Google.Apis.Auth.dll
 C:\Users\PC\Desktop\trainningCode\WebAPI\HCoffeeWebAPI\HCoffeeWebAPI\bin\Debug\net8.0\Google.Apis.Core.dll
+C:\Users\PC\Desktop\trainningCode\WebAPI\HCoffeeWebAPI\HCoffeeWebAPI\bin\Debug\net8.0\Infobip.Api.SDK.dll
+C:\Users\PC\Desktop\trainningCode\WebAPI\HCoffeeWebAPI\HCoffeeWebAPI\bin\Debug\net8.0\JsonSubTypes.dll
+C:\Users\PC\Desktop\trainningCode\WebAPI\HCoffeeWebAPI\HCoffeeWebAPI\bin\Debug\net8.0\System.Net.Http.Formatting.dll
+C:\Users\PC\Desktop\trainningCode\WebAPI\HCoffeeWebAPI\HCoffeeWebAPI\bin\Debug\net8.0\Newtonsoft.Json.Bson.dll

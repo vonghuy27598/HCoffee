@@ -48,6 +48,10 @@
               "target": "Package",
               "version": "[2.4.0, )"
             },
+            "Infobip.Api.SDK": {
+              "target": "Package",
+              "version": "[1.0.3, )"
+            },
             "Microsoft.AspNetCore.Authentication.JwtBearer": {
               "target": "Package",
               "version": "[8.0.2, )"

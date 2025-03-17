@@ -12,10 +12,11 @@ namespace HCoffeeWebAPI.Data
         public DateTime DateCreateCart { get; set; }
         public string PhoneNumber { get; set; }
         public string Address { get; set; }
+       
         public string DeviceId { get; set; }
 
         [ForeignKey("CartId")]
-        public CartDetail CartDetail { get; set; }
+        public List<CartDetail> CartDetail { get; set; }
     }
 
     [Table("CartDetail")]
@@ -27,7 +28,6 @@ namespace HCoffeeWebAPI.Data
         public double TotalPriceCart { get; set; }
         public double TotalQuantityCart { get; set; }
         public double TotalPriceShipCart { get; set; }
-        public int CartId { get;set; }
         [ForeignKey("CartDetailId")]
         public List<ListProductInCart> ListProductInCart { get; set; }
     }

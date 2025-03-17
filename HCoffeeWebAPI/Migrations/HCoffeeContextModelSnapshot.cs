@@ -51,7 +51,10 @@ namespace HCoffeeWebAPI.Migrations
             modelBuilder.Entity("HCoffeeWebAPI.Data.Cart", b =>
                 {
                     b.Property<int>("CartId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CartId"));
 
                     b.Property<string>("Address")
                         .IsRequired()
@@ -81,7 +84,7 @@ namespace HCoffeeWebAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CartDetailId"));
 
-                    b.Property<int>("CartId")
+                    b.Property<int?>("CartId")
                         .HasColumnType("int");
 
                     b.Property<double>("TotalPriceCart")
@@ -94,6 +97,8 @@ namespace HCoffeeWebAPI.Migrations
                         .HasColumnType("float");
 
                     b.HasKey("CartDetailId");
+
+                    b.HasIndex("CartId");
 
                     b.ToTable("CartDetail");
                 });
@@ -178,7 +183,7 @@ namespace HCoffeeWebAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("OrderDetailId")
+                    b.Property<int?>("OrderDetailId")
                         .HasColumnType("int");
 
                     b.Property<int>("ProductId")
@@ -305,7 +310,10 @@ namespace HCoffeeWebAPI.Migrations
             modelBuilder.Entity("HCoffeeWebAPI.Data.Order", b =>
                 {
                     b.Property<int>("OrderId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrderId"));
 
                     b.Property<string>("Address")
                         .IsRequired()
@@ -342,7 +350,7 @@ namespace HCoffeeWebAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrderDetailId"));
 
-                    b.Property<int>("OrderId")
+                    b.Property<int?>("OrderId")
                         .HasColumnType("int");
 
                     b.Property<double>("TotalPriceOrder")
@@ -355,6 +363,8 @@ namespace HCoffeeWebAPI.Migrations
                         .HasColumnType("float");
 
                     b.HasKey("OrderDetailId");
+
+                    b.HasIndex("OrderId");
 
                     b.ToTable("OrderDetail");
                 });
@@ -412,6 +422,40 @@ namespace HCoffeeWebAPI.Migrations
                     b.HasKey("ProductId");
 
                     b.ToTable("Product");
+                });
+
+            modelBuilder.Entity("HCoffeeWebAPI.Data.RefreshToken", b =>
+                {
+                    b.Property<Guid>("RefreshTokenId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("ExpiredAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsUsed")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("IssuedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("JwtId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Token")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("RefreshTokenId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("RefreshToken");
                 });
 
             modelBuilder.Entity("HCoffeeWebAPI.Data.Topping", b =>
@@ -718,26 +762,18 @@ namespace HCoffeeWebAPI.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("HCoffeeWebAPI.Data.Cart", b =>
+            modelBuilder.Entity("HCoffeeWebAPI.Data.CartDetail", b =>
                 {
-                    b.HasOne("HCoffeeWebAPI.Data.CartDetail", "CartDetail")
-                        .WithMany()
-                        .HasForeignKey("CartId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("CartDetail");
+                    b.HasOne("HCoffeeWebAPI.Data.Cart", null)
+                        .WithMany("CartDetail")
+                        .HasForeignKey("CartId");
                 });
 
             modelBuilder.Entity("HCoffeeWebAPI.Data.ListProductChoose", b =>
                 {
-                    b.HasOne("HCoffeeWebAPI.Data.OrderDetail", "OrderDetail")
-                        .WithMany()
-                        .HasForeignKey("OrderDetailId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("OrderDetail");
+                    b.HasOne("HCoffeeWebAPI.Data.OrderDetail", null)
+                        .WithMany("ListProductChooses")
+                        .HasForeignKey("OrderDetailId");
                 });
 
             modelBuilder.Entity("HCoffeeWebAPI.Data.ListProductInCart", b =>
@@ -747,15 +783,22 @@ namespace HCoffeeWebAPI.Migrations
                         .HasForeignKey("CartDetailId");
                 });
 
-            modelBuilder.Entity("HCoffeeWebAPI.Data.Order", b =>
+            modelBuilder.Entity("HCoffeeWebAPI.Data.OrderDetail", b =>
                 {
-                    b.HasOne("HCoffeeWebAPI.Data.OrderDetail", "OrderDetail")
+                    b.HasOne("HCoffeeWebAPI.Data.Order", null)
+                        .WithMany("OrderDetail")
+                        .HasForeignKey("OrderId");
+                });
+
+            modelBuilder.Entity("HCoffeeWebAPI.Data.RefreshToken", b =>
+                {
+                    b.HasOne("HCoffeeWebAPI.Data.User", "User")
                         .WithMany()
-                        .HasForeignKey("OrderId")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("OrderDetail");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -809,9 +852,24 @@ namespace HCoffeeWebAPI.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("HCoffeeWebAPI.Data.Cart", b =>
+                {
+                    b.Navigation("CartDetail");
+                });
+
             modelBuilder.Entity("HCoffeeWebAPI.Data.CartDetail", b =>
                 {
                     b.Navigation("ListProductInCart");
+                });
+
+            modelBuilder.Entity("HCoffeeWebAPI.Data.Order", b =>
+                {
+                    b.Navigation("OrderDetail");
+                });
+
+            modelBuilder.Entity("HCoffeeWebAPI.Data.OrderDetail", b =>
+                {
+                    b.Navigation("ListProductChooses");
                 });
 #pragma warning restore 612, 618
         }

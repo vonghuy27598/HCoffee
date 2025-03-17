@@ -16,6 +16,9 @@ C:\Users\PC\Desktop\trainningCode\WebAPI\HCoffeeWebAPI\HCoffeeWebAPI\obj\Release
 C:\Users\PC\Desktop\trainningCode\WebAPI\HCoffeeWebAPI\HCoffeeWebAPI\obj\Release\net8.0\PubTmp\Out\Google.Apis.Auth.PlatformServices.dll
 C:\Users\PC\Desktop\trainningCode\WebAPI\HCoffeeWebAPI\HCoffeeWebAPI\obj\Release\net8.0\PubTmp\Out\Google.Apis.Auth.dll
 C:\Users\PC\Desktop\trainningCode\WebAPI\HCoffeeWebAPI\HCoffeeWebAPI\obj\Release\net8.0\PubTmp\Out\Google.Apis.Core.dll
+C:\Users\PC\Desktop\trainningCode\WebAPI\HCoffeeWebAPI\HCoffeeWebAPI\obj\Release\net8.0\PubTmp\Out\Infobip.Api.SDK.dll
+C:\Users\PC\Desktop\trainningCode\WebAPI\HCoffeeWebAPI\HCoffeeWebAPI\obj\Release\net8.0\PubTmp\Out\JsonSubTypes.dll
+C:\Users\PC\Desktop\trainningCode\WebAPI\HCoffeeWebAPI\HCoffeeWebAPI\obj\Release\net8.0\PubTmp\Out\System.Net.Http.Formatting.dll
 C:\Users\PC\Desktop\trainningCode\WebAPI\HCoffeeWebAPI\HCoffeeWebAPI\obj\Release\net8.0\PubTmp\Out\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 C:\Users\PC\Desktop\trainningCode\WebAPI\HCoffeeWebAPI\HCoffeeWebAPI\obj\Release\net8.0\PubTmp\Out\Microsoft.AspNetCore.Cryptography.Internal.dll
 C:\Users\PC\Desktop\trainningCode\WebAPI\HCoffeeWebAPI\HCoffeeWebAPI\obj\Release\net8.0\PubTmp\Out\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
@@ -41,6 +44,7 @@ C:\Users\PC\Desktop\trainningCode\WebAPI\HCoffeeWebAPI\HCoffeeWebAPI\obj\Release
 C:\Users\PC\Desktop\trainningCode\WebAPI\HCoffeeWebAPI\HCoffeeWebAPI\obj\Release\net8.0\PubTmp\Out\Microsoft.SqlServer.Server.dll
 C:\Users\PC\Desktop\trainningCode\WebAPI\HCoffeeWebAPI\HCoffeeWebAPI\obj\Release\net8.0\PubTmp\Out\Microsoft.Win32.SystemEvents.dll
 C:\Users\PC\Desktop\trainningCode\WebAPI\HCoffeeWebAPI\HCoffeeWebAPI\obj\Release\net8.0\PubTmp\Out\Newtonsoft.Json.dll
+C:\Users\PC\Desktop\trainningCode\WebAPI\HCoffeeWebAPI\HCoffeeWebAPI\obj\Release\net8.0\PubTmp\Out\Newtonsoft.Json.Bson.dll
 C:\Users\PC\Desktop\trainningCode\WebAPI\HCoffeeWebAPI\HCoffeeWebAPI\obj\Release\net8.0\PubTmp\Out\Swashbuckle.AspNetCore.Swagger.dll
 C:\Users\PC\Desktop\trainningCode\WebAPI\HCoffeeWebAPI\HCoffeeWebAPI\obj\Release\net8.0\PubTmp\Out\Swashbuckle.AspNetCore.SwaggerGen.dll
 C:\Users\PC\Desktop\trainningCode\WebAPI\HCoffeeWebAPI\HCoffeeWebAPI\obj\Release\net8.0\PubTmp\Out\Swashbuckle.AspNetCore.SwaggerUI.dll
