@@ -14,7 +14,6 @@ var AppDraggaleBottomSheet_1 = require("@components/Custom/AppDraggaleBottomShee
 var FeatureCart_1 = require("@components/FeatureCart");
 var ContainerHome = function () {
     var _a = HomeProvider_1.useHome(), scrollRefHome = _a.scrollRefHome, setDistanceCategoryHome = _a.setDistanceCategoryHome, handleScroll = _a.handleScroll, handleEndScroll = _a.handleEndScroll, handleEndDragScroll = _a.handleEndDragScroll, showBottomSheet = _a.showBottomSheet, setShowBottomSheet = _a.setShowBottomSheet;
-    console.log('RENDER CONTAINER HOME');
     return (react_1["default"].createElement(react_native_1.View, null,
         react_1["default"].createElement(react_native_1.ScrollView, { ref: scrollRefHome, onScroll: function (e) {
                 var offsetY = e.nativeEvent.contentOffset.y;

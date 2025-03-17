@@ -21,6 +21,7 @@ const FooterOptionBuy = ({
   setAddSelectProduct,
   setShowBottomSheet,
   updateItem,
+  selectIndex,
 }: {
   showBottomSheet?: boolean;
   chooseProduct: IProductType | undefined;
@@ -30,6 +31,7 @@ const FooterOptionBuy = ({
   >;
   setShowBottomSheet: React.Dispatch<React.SetStateAction<boolean>>;
   updateItem: boolean;
+  selectIndex?: number;
 }) => {
   const [quantity, setQuantity] = useState<number>(1);
   const [totalPrice, setTotalPrice] = useState<number>(0);
@@ -40,8 +42,7 @@ const FooterOptionBuy = ({
   };
   const updateCart = () => {
     // console.log('UPDATE CART', addSelectProduct);
-
-    dispatch(updateCartAction(addSelectProduct));
+    dispatch(updateCartAction(addSelectProduct, selectIndex!));
     setShowBottomSheet(false);
   };
   // useEffect(() => {

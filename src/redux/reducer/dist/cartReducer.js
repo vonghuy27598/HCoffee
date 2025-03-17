@@ -41,7 +41,7 @@ exports.setCartReducer = function (state, action) {
     var type = action.type, payload = action.payload;
     switch (type) {
         case typeCartAction_1.typeCartACtion.ACTION_SET_CART:
-            return __assign(__assign({}, state), { idCart: payload.idCart, listProduct: payload.listProduct });
+            return __assign(__assign({}, state), { idCart: payload.idCart, address: payload.address, phoneNumber: payload.phoneNumber, totalPriceCart: payload.totalPriceCart, totalPriceShipCart: payload.totalPriceShipCart, totalQuantityCart: payload.totalQuantityCart, listProduct: payload.listProduct });
         default:
             return state;
     }

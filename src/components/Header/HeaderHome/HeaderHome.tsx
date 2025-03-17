@@ -5,13 +5,15 @@ import {styles} from './styles';
 import {PRIMARY_COLOR} from '../../../constants/colors';
 import {useHome} from '@container/HomeScreen/Provider/HomeProvider';
 import FocusAwareStatusBar from '@components/FocusAwareStatusBar';
+import {useAppRoot} from '@navigator/AppProvider';
+import {useNavigation} from '@react-navigation/native';
 
 const AnimatedTextInput = Animated.createAnimatedComponent(TextInput);
 const AnimatedTouchableOpacity = Animated.createAnimatedComponent(TextInput);
 
 const HeaderHome = () => {
   const {dynamicHeaderAnimation, searchBoxAnim, searchInputAnim} = useHome();
-
+  const navigation = useNavigation();
   return useMemo(() => {
     return (
       <Animated.View
@@ -60,7 +62,11 @@ const HeaderHome = () => {
             <Icon name="ticket" size={20} color={PRIMARY_COLOR} />
           </TouchableOpacity>
           <View style={styles.space}></View>
-          <TouchableOpacity style={styles.iconTouch}>
+          <TouchableOpacity
+            style={styles.iconTouch}
+            onPress={() => {
+              navigation.navigate('Notification' as never);
+            }}>
             <Icon name="notifications-sharp" size={20} color={PRIMARY_COLOR} />
           </TouchableOpacity>
         </View>

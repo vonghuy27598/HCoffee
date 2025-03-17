@@ -1,12 +1,11 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import {
   View,
-  ScrollView,
   TouchableOpacity,
   TextInput,
   ListRenderItemInfo,
 } from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {styles} from './styles';
 import AppText from '@components/Custom/AppText';
 import {COLORS} from '../../constants';
@@ -26,6 +25,7 @@ import {IProductType} from '@type/productType';
 import {useApolloClient} from '@apollo/client';
 import {getProductByCate} from '@graphQL/services/serviceLineProductByCate';
 import {deleteProductCart} from '@redux/action/cartAction';
+import {BodyPromotion, HeaderPromotion} from '@components/FeaturePromotion';
 
 const BodyCart = (
   showBottomSheetCart: boolean,
@@ -34,10 +34,10 @@ const BodyCart = (
   const locationUser = useSelector(
     (state: RootState) => state.getLocationUserReducer.items,
   );
-  const listProductCart = useSelector(
-    (state: RootState) => state.setCartReducer.listProduct,
-  );
+  const cart = useSelector((state: RootState) => state.setCartReducer);
   const [showBottomSheet, setShowBottomSheet] = useState(false);
+  const [showBottomSheetPromotion, setShowBottomSheetPromotion] =
+    useState(false);
   const [chooseProduct, setChooseProduct] = useState<IProductType>();
   const [addSelectProduct, setAddSelectProduct] =
     useState<IStoreOptionBuyProductType>({
@@ -50,6 +50,7 @@ const BodyCart = (
       iD_Cate: 0,
       note: '',
     });
+  const [selectIndex, setSelectIndex] = useState(0);
   const [listProduct, setListProduct] = useState<IStoreOptionBuyProductType[]>(
     [],
   );
@@ -57,14 +58,14 @@ const BodyCart = (
   const client = useApolloClient();
   useEffect(() => {
     if (
-      !Helper.isNullOrUndefined(listProductCart) &&
-      listProductCart.length > 0
+      !Helper.isNullOrUndefined(cart.listProduct) &&
+      cart.listProduct.length > 0
     ) {
-      setListProduct(listProductCart);
+      setListProduct(cart.listProduct);
     } else {
       setListProduct([]);
     }
-  }, [listProductCart.length, showBottomSheetCart]);
+  }, [cart.listProduct.length, showBottomSheetCart]);
   const renderProduct = (
     data: ListRenderItemInfo<IStoreOptionBuyProductType>,
   ) => {
@@ -135,6 +136,7 @@ const BodyCart = (
         ),
     );
     setAddSelectProduct(listProduct[indexItem]);
+    setSelectIndex(indexItem);
   };
   const deleteItemProduct = (rowMap: any, indexItem: number) => {
     const newData = [...listProduct];
@@ -148,11 +150,7 @@ const BodyCart = (
       rowMap[indexItem].closeRow();
     }
   };
-  const totalPriceBeforeShip = () => {
-    let total = 0;
-    listProduct.map(x => (total += x.totalPrice));
-    return total;
-  };
+
   return (
     <View style={styles.bodyContainer}>
       <View style={styles.viewBody}>
@@ -207,13 +205,13 @@ const BodyCart = (
           <View style={styles.infoUser}>
             <AppText text="Họ tên khách hàng" style={styles.txtItem} />
             <View style={styles.spacingTxtInfo} />
-            <AppText text="Số điện thoại" style={styles.txtItem} />
+            <AppText text={cart.phoneNumber} style={styles.txtItem} />
           </View>
           <View style={styles.spacingInfoUser} />
           <View style={styles.infoUser}>
-            <AppText text="Họ tên khách hàng" style={styles.txtItem} />
+            <AppText text="Dự kiến giao hàng" style={styles.txtItem} />
             <View style={styles.spacingTxtInfo} />
-            <AppText text="Số điện thoại" style={styles.txtItem} />
+            <AppText text="15-30 phút" style={styles.txtItem} />
           </View>
         </View>
       </View>
@@ -224,7 +222,9 @@ const BodyCart = (
             textFont="bold"
             style={styles.txtTitle}
           />
-          <TouchableOpacity style={styles.btnPlus}>
+          <TouchableOpacity
+            style={styles.btnPlus}
+            onPress={() => setShowBottomSheetCart(false)}>
             <AppText
               text="+ Thêm"
               textFont="bold"
@@ -252,15 +252,20 @@ const BodyCart = (
         <View style={[styles.flexDirection, styles.viewItem]}>
           <AppText text="Thành tiền" style={styles.txtItem} />
           <AppText
-            text={Helper.formatPrice(totalPriceBeforeShip())}
+            text={Helper.formatPrice(cart.totalPriceCart)}
             style={styles.txtItem}
           />
         </View>
         <View style={[styles.flexDirection, styles.viewItem]}>
           <AppText text="Phí giao hàng" style={styles.txtItem} />
-          <AppText text="18.000đ" style={styles.txtItem} />
+          <AppText
+            text={Helper.formatPrice(cart.totalPriceShipCart)}
+            style={styles.txtItem}
+          />
         </View>
-        <TouchableOpacity style={[styles.flexDirection, styles.viewItem]}>
+        <TouchableOpacity
+          style={[styles.flexDirection, styles.viewItem]}
+          onPress={() => setShowBottomSheetPromotion(true)}>
           <AppText text="Chọn khuyến mãi" style={styles.txtItem} />
           <Icon name="chevron-forward" size={20} />
         </TouchableOpacity>
@@ -271,7 +276,9 @@ const BodyCart = (
             style={styles.txtItem}
           />
           <AppText
-            text={Helper.formatPrice(totalPriceBeforeShip() + 18000)} // 18000 default ship
+            text={Helper.formatPrice(
+              cart.totalPriceCart + cart.totalPriceShipCart,
+            )}
             textFont="bold"
             style={styles.txtItem}
           />
@@ -286,6 +293,8 @@ const BodyCart = (
           <Icon name="chevron-forward" size={20} />
         </TouchableOpacity>
       </View>
+
+      {/* //Select Product */}
       <AppDraggaleBottomSheet
         showBottomSheet={showBottomSheet}
         setShowBottomSheet={setShowBottomSheet}
@@ -306,7 +315,18 @@ const BodyCart = (
           setAddSelectProduct,
           setShowBottomSheet,
           updateItem: true,
+          selectIndex,
         })}
+      />
+      {/* // Promotion */}
+      <AppDraggaleBottomSheet
+        showBottomSheet={showBottomSheetPromotion}
+        setShowBottomSheet={setShowBottomSheetPromotion}
+        HeaderBottomSheetComponent={HeaderPromotion(
+          showBottomSheetPromotion,
+          setShowBottomSheetPromotion,
+        )}
+        BodyBottomSheetComponent={BodyPromotion()}
       />
     </View>
   );

@@ -9,6 +9,32 @@ export const isNullOrUndefined = (value: any) => {
   return false;
 };
 
+export const isJSON = (value: any) => {
+  try {
+    if (!isNullOrUndefined(value)) {
+      return JSON.parse(value) && !!value;
+    }
+    return false;
+  } catch (e) {
+    return false;
+  }
+};
+
+export const isArray = (value: any) => {
+  return value !== undefined && value !== null && value.constructor === Array;
+};
+
+export const sumArrayKey = (arr: any[], key: string) => {
+  return arr.reduce((a, b) => a + (b[key] || 0), 0);
+};
+
+export const isPhoneNumber = (value: string) => {
+  const value_regex = /((09|03|07|08|05)+([0-9]{8})\b)/g;
+  if (value_regex.test(value)) {
+    return true;
+  }
+  return false;
+};
 export const checkZeroPrice = (value: number) => {
   if (value === null) return true;
   if (value === 0) return true;

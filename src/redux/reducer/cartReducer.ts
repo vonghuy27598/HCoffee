@@ -54,6 +54,11 @@ export const setCartReducer = (
       return {
         ...state,
         idCart: payload.idCart,
+        address: payload.address,
+        phoneNumber: payload.phoneNumber,
+        totalPriceCart: payload.totalPriceCart,
+        totalPriceShipCart: payload.totalPriceShipCart,
+        totalQuantityCart: payload.totalQuantityCart,
         listProduct: payload.listProduct,
       };
     default:

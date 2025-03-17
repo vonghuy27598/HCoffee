@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "329666624191",
+    "project_id": "hcoffee-8edd4",
+    "storage_bucket": "hcoffee-8edd4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:329666624191:android:2bf0fb6ec95138a0b9e40a",
+        "android_client_info": {
+          "package_name": "com.hcoffee"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDGWC8xN8AsL12zXahmZhPR2MgHTqKKCis"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

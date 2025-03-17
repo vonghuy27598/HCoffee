@@ -54,6 +54,7 @@ var BoxLocation = function () {
     var _b = OrderProvider_1.useOrder(), boxLocationAnimOrder = _b.boxLocationAnimOrder, iconAnimOrder = _b.iconAnimOrder, textLocationAnimOrder = _b.textLocationAnimOrder, textTitleLocationAnimOrder = _b.textTitleLocationAnimOrder, setShowBottomSheetOrder = _b.setShowBottomSheetOrder;
     var dispatch = react_redux_1.useDispatch();
     var locationCurrent = react_redux_1.useSelector(function (state) { return state.getLocationUserReducer.items; });
+    var cart = react_redux_1.useSelector(function (state) { return state.setCartReducer; });
     var getLocation = function () { return __awaiter(void 0, void 0, void 0, function () {
         return __generator(this, function (_a) {
             switch (_a.label) {
@@ -93,13 +94,14 @@ var BoxLocation = function () {
                     locationCurrent.length > 0
                     ? locationCurrent[0].address.label
                     : 'Giao hàng tận nơi', textFont: "bold", animated: true, style: [textLocationAnim, textLocationAnimOrder], numberOfLines: 1 })),
-        react_1["default"].createElement(react_native_1.TouchableOpacity, { style: [styles_1.styles.flexDirectionRow, styles_1.styles.btnGoCart], onPress: function () {
+        !index_1.Helper.isNullOrUndefined(cart.listProduct) &&
+            cart.listProduct.length > 0 && (react_1["default"].createElement(react_native_1.TouchableOpacity, { style: [styles_1.styles.flexDirectionRow, styles_1.styles.btnGoCart], onPress: function () {
                 return setShowBottomSheet
                     ? setShowBottomSheet(true)
                     : setShowBottomSheetOrder(true);
             } },
             react_1["default"].createElement(react_native_1.View, { style: styles_1.styles.boxQuantity },
-                react_1["default"].createElement(AppText_1["default"], { text: "5", textColor: constants_1.COLORS.PRIMARY_COLOR, textSize: 13, textFont: "bold" })),
-            react_1["default"].createElement(AppText_1["default"], { text: "255.000\u0111", textColor: constants_1.COLORS.WHITE_COLOR, textFont: "bold", style: styles_1.styles.totalPrice, textSize: 15 }))));
+                react_1["default"].createElement(AppText_1["default"], { text: "" + cart.totalQuantityCart, textColor: constants_1.COLORS.PRIMARY_COLOR, textSize: 13, textFont: "bold" })),
+            react_1["default"].createElement(AppText_1["default"], { text: index_1.Helper.formatPrice(cart.totalPriceCart + cart.totalPriceShipCart), textColor: constants_1.COLORS.WHITE_COLOR, textFont: "bold", style: styles_1.styles.totalPrice, textSize: 15 })))));
 };
 exports["default"] = BoxLocation;

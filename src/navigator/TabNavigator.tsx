@@ -7,6 +7,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import React from 'react';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {COLORS} from '../constants';
+import InforScreen from '@container/InforScreen';
 
 const Tab = createBottomTabNavigator();
 const TabNavigator = () => {
@@ -50,13 +51,13 @@ const TabNavigator = () => {
         }}
       />
       <Tab.Screen
-        name="PromotionTab"
-        component={PromotionScreen}
+        name="InforTab"
+        component={InforScreen}
         options={{
           headerShown: false,
-          tabBarLabel: 'Ưu đãi',
+          tabBarLabel: 'Khác',
           tabBarIcon: ({color, size}) => (
-            <Icon name="discount" size={size} color={color} />
+            <Icon name="menu" size={size} color={color} />
           ),
         }}
       />

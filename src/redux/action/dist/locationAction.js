@@ -54,7 +54,8 @@ exports.getLocationUserAction = function (latitude, longitude) {
                         url: api_1.constantsURL.GET_LOCATION_USER,
                         request: {
                             method: 'GET',
-                            queryString: queryString
+                            queryString: queryString,
+                            checkCall: 'Other'
                         }
                     };
                     return [4 /*yield*/, fetchAPI_1.fetchAPI(paramsAPI)];

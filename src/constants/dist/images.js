@@ -4,7 +4,11 @@ exports.IMAGES = void 0;
 /* eslint-disable @typescript-eslint/no-var-requires */
 var ICON_COFFEE = require('../../assets/image/icon_coffee.png');
 var ICON_CATE_HEADER = require('../../assets/image/icon_cateheader.png');
+var PROMOTION = require('../../assets/image/promotion.png');
+var BG_LOGIN = require('../../assets/image/background-login.png');
 exports.IMAGES = {
     ICON_COFFEE: ICON_COFFEE,
-    ICON_CATE_HEADER: ICON_CATE_HEADER
+    ICON_CATE_HEADER: ICON_CATE_HEADER,
+    PROMOTION: PROMOTION,
+    BG_LOGIN: BG_LOGIN
 };

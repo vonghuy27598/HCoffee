@@ -3,8 +3,8 @@ import React from 'react';
 
 const StoreScreen = () => {
   return (
-    <View>
-      <Text>StoreScreen</Text>
+    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+      <Text>Hệ thống đang phát triển</Text>
     </View>
   );
 };

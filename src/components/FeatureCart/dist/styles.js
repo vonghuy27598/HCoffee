@@ -11,7 +11,7 @@ exports.styles = react_native_1.StyleSheet.create({
     },
     headerContainer: {
         width: '100%',
-        paddingHorizontal: 15,
+        paddingHorizontal: 20,
         paddingVertical: 10
     },
     bodyContainer: {

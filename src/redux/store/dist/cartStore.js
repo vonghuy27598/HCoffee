@@ -16,5 +16,10 @@ exports.optionBuyProductStore = {
 };
 exports.cartStore = {
     idCart: 0,
+    address: '',
+    phoneNumber: '',
+    totalPriceCart: 0,
+    totalPriceShipCart: 0,
+    totalQuantityCart: 0,
     listProduct: []
 };

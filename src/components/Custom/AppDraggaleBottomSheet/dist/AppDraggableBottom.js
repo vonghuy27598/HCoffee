@@ -64,13 +64,15 @@ var AppDraggableBottom = function (_a) {
                 react_1["default"].createElement(react_native_1.Animated.View, { style: [
                         maxHeightBottomSheet === '100%'
                             ? styles.bodyContent100
-                            : styles.bodyContent70,
+                            : FooterBottoomSheetComponent
+                                ? styles.bodyContent70
+                                : styles.bodyContent100,
                         bottomBodyContentAnimation,
                     ] },
                     react_1["default"].createElement(react_native_1.ScrollView, { style: { flex: 1 } },
                         react_1["default"].createElement(BodyBottomSheet, null)))),
-            react_1["default"].createElement(react_native_1.Animated.View, { style: [styles.footerArea, bottomFooterAnimation] },
-                react_1["default"].createElement(FooterBottomSheet, null))))));
+            FooterBottoomSheetComponent && (react_1["default"].createElement(react_native_1.Animated.View, { style: [styles.footerArea, bottomFooterAnimation] },
+                react_1["default"].createElement(FooterBottomSheet, null)))))));
 };
 var styles = react_native_1.StyleSheet.create({
     container: {
@@ -128,19 +130,18 @@ var styles = react_native_1.StyleSheet.create({
         height: BOTTOM_HEADER_HEIGHT_100,
         justifyContent: 'center',
         alignItems: 'center',
-        paddingHorizontal: 10,
         borderBottomColor: constants_1.COLORS.LIGHT_GRAY_COLOR,
         borderBottomWidth: 0.5
     },
     bodyContent70: {
         width: BOTTOM_SHEET_WIDTH,
         height: BOTTOM_BODY_HEIGHT_70,
-        backgroundColor: constants_1.COLORS.GRAY_e3e3e3_COLOR,
+        backgroundColor: constants_1.COLORS.GRAY_efefef_COLOR,
         paddingBottom: BOTTOM_FOOTER_HEIGHT
     },
     bodyContent100: {
         flex: 1,
-        backgroundColor: constants_1.COLORS.GRAY_e3e3e3_COLOR,
+        backgroundColor: constants_1.COLORS.GRAY_efefef_COLOR,
         paddingBottom: BOTTOM_FOOTER_HEIGHT
     },
     footerArea: {
@@ -150,7 +151,7 @@ var styles = react_native_1.StyleSheet.create({
         alignItems: 'center',
         position: 'absolute',
         backgroundColor: constants_1.COLORS.WHITE_COLOR,
-        bottom: 0,
+        bottom: 22,
         left: 0,
         right: 0,
         zIndex: 9999

@@ -1,59 +1,62 @@
-import {View, TouchableOpacity} from 'react-native';
-import React, {useEffect, useState} from 'react';
+import {View, TouchableOpacity, Alert} from 'react-native';
+import React from 'react';
 import {styles} from './styles';
 import AppText from '@components/Custom/AppText';
 import {COLORS} from '../../constants';
-import {IStoreOptionBuyProductType} from '@type/cartType';
 import {Helper} from '@common/index';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from '@redux/store';
+import {addOrder} from '@redux/action/orderAction';
+import {useNavigation} from '@react-navigation/native';
 
 const FooterCart = (
   showBottomSheetCart: boolean,
   setShowBottomSheetCart: React.Dispatch<React.SetStateAction<boolean>>,
 ) => {
-  const [listProduct, setListProduct] = useState<IStoreOptionBuyProductType[]>(
-    [],
-  );
-  const listProductCart = useSelector(
-    (state: RootState) => state.setCartReducer.listProduct,
-  );
-  useEffect(() => {
-    if (
-      !Helper.isNullOrUndefined(listProductCart) &&
-      listProductCart.length > 0
-    ) {
-      setListProduct(listProductCart);
+  const dispatch = useDispatch<any>();
+  const cart = useSelector((state: RootState) => state.setCartReducer);
+  const {isLogin} = useSelector((state: RootState) => state.genarateReducer);
+  const navigation = useNavigation();
+  const handleOrder = () => {
+    if (isLogin) {
+      dispatch(addOrder(setShowBottomSheetCart));
     } else {
-      setListProduct([]);
+      Alert.alert(
+        'Đăng nhập',
+        'Quý khách vui lòng đăng nhập trước khi đặt hàng',
+        [
+          {
+            text: 'Đồng ý',
+            onPress: () => {
+              setShowBottomSheetCart(false);
+              navigation.navigate('Login' as never);
+            },
+          },
+          {
+            text: 'Hủy',
+          },
+        ],
+      );
     }
-  }, [listProductCart.length, showBottomSheetCart]);
-  const totalPriceBeforeShip = () => {
-    let total = 0;
-    listProduct.map(x => (total += x.totalPrice));
-    return total;
-  };
-  const quantityProduct = () => {
-    let total = 0;
-    listProduct.map(x => (total += x.quantity));
-    return total;
   };
   return (
     <View style={[styles.flexDirection, styles.footerContainer]}>
       <View>
         <AppText
-          text={`Giao hàng: ${quantityProduct()} sản phẩm`}
+          text={`Giao hàng: ${cart.totalQuantityCart} sản phẩm`}
           textColor={COLORS.WHITE_COLOR}
           style={styles.txtItem}
         />
         <AppText
-          text={Helper.formatPrice(totalPriceBeforeShip() + 18000)}
+          text={Helper.formatPrice(
+            cart.totalPriceCart + cart.totalPriceShipCart,
+          )}
           textFont="bold"
           textColor={COLORS.WHITE_COLOR}
           style={styles.txtItem}
         />
       </View>
-      <TouchableOpacity style={styles.btnBuy}>
+      <TouchableOpacity style={styles.btnBuy} onPress={() => handleOrder()}>
         <AppText
           text="Đặt hàng"
           textColor={COLORS.PRIMARY_COLOR}

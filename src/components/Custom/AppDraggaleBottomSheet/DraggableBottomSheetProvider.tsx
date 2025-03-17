@@ -83,6 +83,7 @@ const DraggableBottomSheetProvider = ({
       animatedHideOrShow('hide');
     }
   }, [value.showBottomSheet, lastGestureDy.current]);
+
   const animatedHideOrShow = async (status: 'hide' | 'show') => {
     Animated.timing(animatedValue, {
       toValue: status === 'hide' ? MAX_DOWNWAR_TRANSLATE_Y : 0,

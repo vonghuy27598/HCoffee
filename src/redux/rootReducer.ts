@@ -12,6 +12,7 @@ import {
   setCartReducer,
 } from './reducer/cartReducer';
 import {getLocationUserReducer} from './reducer/locationReducer';
+import {genarateReducer} from './reducer/genarateReducer';
 const appReducer = combineReducers({
   getCategoryMenuReducer,
   getBannerHomeReducer,
@@ -22,6 +23,7 @@ const appReducer = combineReducers({
   setCartReducer,
   setHeaderCateName,
   getLocationUserReducer,
+  genarateReducer,
 });
 
 const rootReducer = (state: any, action: any) => {

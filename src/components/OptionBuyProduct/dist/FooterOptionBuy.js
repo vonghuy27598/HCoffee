@@ -22,7 +22,7 @@ var index_1 = require("@common/index");
 var react_redux_1 = require("react-redux");
 var cartAction_1 = require("@redux/action/cartAction");
 var FooterOptionBuy = function (_a) {
-    var showBottomSheet = _a.showBottomSheet, chooseProduct = _a.chooseProduct, addSelectProduct = _a.addSelectProduct, setAddSelectProduct = _a.setAddSelectProduct, setShowBottomSheet = _a.setShowBottomSheet, updateItem = _a.updateItem;
+    var showBottomSheet = _a.showBottomSheet, chooseProduct = _a.chooseProduct, addSelectProduct = _a.addSelectProduct, setAddSelectProduct = _a.setAddSelectProduct, setShowBottomSheet = _a.setShowBottomSheet, updateItem = _a.updateItem, selectIndex = _a.selectIndex;
     var _b = react_1.useState(1), quantity = _b[0], setQuantity = _b[1];
     var _c = react_1.useState(0), totalPrice = _c[0], setTotalPrice = _c[1];
     var dispatch = react_redux_1.useDispatch();
@@ -32,7 +32,7 @@ var FooterOptionBuy = function (_a) {
     };
     var updateCart = function () {
         // console.log('UPDATE CART', addSelectProduct);
-        dispatch(cartAction_1.updateCartAction(addSelectProduct));
+        dispatch(cartAction_1.updateCartAction(addSelectProduct, selectIndex));
         setShowBottomSheet(false);
     };
     // useEffect(() => {

@@ -14,6 +14,7 @@ export const getLocationUserAction = (latitude: number, longitude: number) => {
         request: {
           method: 'GET',
           queryString,
+          checkCall: 'Other',
         },
       };
       const res = await fetchAPI(paramsAPI);

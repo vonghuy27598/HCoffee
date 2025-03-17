@@ -21,7 +21,6 @@ const ContainerHome = () => {
     showBottomSheet,
     setShowBottomSheet,
   } = useHome();
-  console.log('RENDER CONTAINER HOME');
   return (
     <View>
       <ScrollView

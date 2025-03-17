@@ -36,99 +36,26 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-exports.requestPermissionLocation = exports.firstCheckPermissionLocation = void 0;
+exports.requestPermissionNotification = exports.firstCheckPermissionNotification = exports.requestPermissionLocation = exports.firstCheckPermissionLocation = void 0;
 var react_native_1 = require("react-native");
 var permissions = require("react-native-permissions");
-var storage_1 = require("../constants/storage");
-var async_storage_1 = require("@react-native-async-storage/async-storage");
+var messaging_1 = require("@react-native-firebase/messaging");
+//#region PERMISSION LOCATION APP
 var checkRequestLocation = react_native_1.Platform.OS === 'ios'
     ? permissions.PERMISSIONS.IOS.LOCATION_WHEN_IN_USE
     : permissions.PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION;
-var setLocalStorageLocation = function (localStorage) { return __awaiter(void 0, void 0, void 0, function () {
-    var storageLocation;
+exports.firstCheckPermissionLocation = function () { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0:
-                storageLocation = {
-                    android: {
-                        PERMISSIONS_ANDROID_ACCESS_BACKGROUND_LOCATION: react_native_1.Platform.OS === 'android' &&
-                            localStorage[permissions.PERMISSIONS.ANDROID.ACCESS_BACKGROUND_LOCATION],
-                        PERMISSIONS_ANDROID_ACCESS_FINE_LOCATION: react_native_1.Platform.OS === 'android' &&
-                            localStorage[permissions.PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION]
-                    },
-                    ios: {
-                        PERMISSIONS_IOS_LOCATION_ALWAYS: react_native_1.Platform.OS === 'ios' &&
-                            localStorage[permissions.PERMISSIONS.IOS.LOCATION_ALWAYS],
-                        PERMISSIONS_IOS_LOCATION_WHEN_IN_USE: react_native_1.Platform.OS === 'ios' &&
-                            localStorage[permissions.PERMISSIONS.IOS.LOCATION_WHEN_IN_USE]
-                    }
-                };
-                console.log('checkPermission', storageLocation);
-                return [4 /*yield*/, async_storage_1["default"].setItem(storage_1.PERMISSIONS_LOCATION_APP, JSON.stringify(storageLocation))];
+            case 0: return [4 /*yield*/, permissions.check(checkRequestLocation).then(function (statuses) {
+                    console.log('firstCheckPermissionLocation', statuses);
+                })];
             case 1:
                 _a.sent();
                 return [2 /*return*/];
         }
     });
 }); };
-var checkBlockedPermissionLocation = function () { return __awaiter(void 0, void 0, void 0, function () {
-    var _a, _b, _c, statusPermission;
-    return __generator(this, function (_d) {
-        switch (_d.label) {
-            case 0:
-                _b = (_a = console).log;
-                _c = ['checkBlockedPermissionLocation request'];
-                return [4 /*yield*/, permissions.check(checkRequestLocation)];
-            case 1:
-                _b.apply(_a, _c.concat([_d.sent()]));
-                return [4 /*yield*/, permissions.check(checkRequestLocation)];
-            case 2:
-                statusPermission = _d.sent();
-                return [2 /*return*/, react_native_1.Platform.OS === 'android'
-                        ? statusPermission === 'blocked'
-                        : statusPermission === 'blocked'];
-        }
-    });
-}); };
-exports.firstCheckPermissionLocation = function () {
-    permissions.check(checkRequestLocation).then(function (statuses) {
-        console.log('firstCheckPermissionLocation', statuses);
-        // const inUse =
-        //   Platform.OS === 'android'
-        //     ? statuse === 'granted'
-        //     : statuses === 'granted';
-        // const allTime =
-        //   Platform.OS === 'android'
-        //     ? statuses[
-        //         permissions.PERMISSIONS.ANDROID.ACCESS_BACKGROUND_LOCATION
-        //       ] === 'granted'
-        //     : statuses[permissions.PERMISSIONS.IOS.LOCATION_ALWAYS] === 'granted';
-        // setLocalStorageLocation(statuses);
-        // if (inUse && allTime) {
-        //   return;
-        // }
-    });
-};
-// const getCurrentPosition = () => {
-//   const dispatch = useDispatch<any>();
-//   Geolocation.getCurrentPosition(
-//     (postion: any) => {
-//       console.log('onReady App', postion);
-//       if (postion.coords) {
-//         dispatch(
-//           getLocationUserAction(
-//             postion.coords.latitude,
-//             postion.coords.longitude,
-//           ),
-//         );
-//       }
-//     },
-//     (err: any) => {
-//       console.log('getCurrentPosition error', err);
-//     },
-//     () => null,
-//   );
-// };
 exports.requestPermissionLocation = function () { return __awaiter(void 0, void 0, void 0, function () {
     var status;
     return __generator(this, function (_a) {
@@ -157,4 +84,58 @@ exports.requestPermissionLocation = function () { return __awaiter(void 0, void 
         }
     });
 }); };
-// export const requestPermission = () => {};
+//#endregion
+//#region PERMISSION NOTIFICATION APP
+exports.firstCheckPermissionNotification = function () { return __awaiter(void 0, void 0, void 0, function () {
+    var authStatus, enabled;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                if (!(react_native_1.Platform.OS === 'ios')) return [3 /*break*/, 2];
+                return [4 /*yield*/, messaging_1["default"]().requestPermission()];
+            case 1:
+                authStatus = _a.sent();
+                enabled = authStatus === messaging_1["default"].AuthorizationStatus.AUTHORIZED ||
+                    authStatus === messaging_1["default"].AuthorizationStatus.PROVISIONAL;
+                if (enabled) {
+                    console.log('Authorization status:', authStatus);
+                }
+                return [3 /*break*/, 4];
+            case 2: 
+            //ANDROID
+            return [4 /*yield*/, permissions
+                    .request(permissions.PERMISSIONS.ANDROID.POST_NOTIFICATIONS)
+                    .then(function (status) {
+                    console.log('PERMISSION NOTIFICATION ANDROID', status);
+                })];
+            case 3:
+                //ANDROID
+                _a.sent();
+                _a.label = 4;
+            case 4: return [2 /*return*/];
+        }
+    });
+}); };
+exports.requestPermissionNotification = function () { return __awaiter(void 0, void 0, void 0, function () {
+    var statusPermission;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, messaging_1["default"]().hasPermission()];
+            case 1:
+                statusPermission = _a.sent();
+                if (statusPermission !== messaging_1["default"].AuthorizationStatus.AUTHORIZED) {
+                    react_native_1.Alert.alert('Quyền ứng dụng', 'Quý khách vui lòng bật tính năng thông báo để nhận được những cập nhật từ HCoffee nhé!', [
+                        {
+                            text: 'Đồng ý',
+                            onPress: function () { return permissions.openSettings(); }
+                        },
+                        {
+                            text: 'Hủy'
+                        },
+                    ]);
+                }
+                return [2 /*return*/];
+        }
+    });
+}); };
+//#region

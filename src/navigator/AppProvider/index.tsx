@@ -1,10 +1,14 @@
 import React, {createContext, useContext} from 'react';
 import {IAppRootProviderType} from './typeAppRootProvider';
+import {useNavigation} from '@react-navigation/native';
 
 const AppContext = createContext({});
 
 const AppProvider = ({children}: {children: React.ReactNode}) => {
-  const dataProvider = {} as IAppRootProviderType;
+  const navigation = useNavigation();
+  const dataProvider = {
+    navigation,
+  } as IAppRootProviderType;
 
   return (
     <AppContext.Provider value={dataProvider}>{children}</AppContext.Provider>

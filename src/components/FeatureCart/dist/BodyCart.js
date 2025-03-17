@@ -22,13 +22,15 @@ var react_native_swipe_list_view_1 = require("react-native-swipe-list-view");
 var client_1 = require("@apollo/client");
 var serviceLineProductByCate_1 = require("@graphQL/services/serviceLineProductByCate");
 var cartAction_1 = require("@redux/action/cartAction");
+var FeaturePromotion_1 = require("@components/FeaturePromotion");
 var BodyCart = function (showBottomSheetCart, setShowBottomSheetCart) {
     var _a;
     var locationUser = react_redux_1.useSelector(function (state) { return state.getLocationUserReducer.items; });
-    var listProductCart = react_redux_1.useSelector(function (state) { return state.setCartReducer.listProduct; });
+    var cart = react_redux_1.useSelector(function (state) { return state.setCartReducer; });
     var _b = react_1.useState(false), showBottomSheet = _b[0], setShowBottomSheet = _b[1];
-    var _c = react_1.useState(), chooseProduct = _c[0], setChooseProduct = _c[1];
-    var _d = react_1.useState({
+    var _c = react_1.useState(false), showBottomSheetPromotion = _c[0], setShowBottomSheetPromotion = _c[1];
+    var _d = react_1.useState(), chooseProduct = _d[0], setChooseProduct = _d[1];
+    var _e = react_1.useState({
         productId: 0,
         productName: '',
         size: '',
@@ -37,19 +39,20 @@ var BodyCart = function (showBottomSheetCart, setShowBottomSheetCart) {
         quantity: 1,
         iD_Cate: 0,
         note: ''
-    }), addSelectProduct = _d[0], setAddSelectProduct = _d[1];
-    var _e = react_1.useState([]), listProduct = _e[0], setListProduct = _e[1];
+    }), addSelectProduct = _e[0], setAddSelectProduct = _e[1];
+    var _f = react_1.useState(0), selectIndex = _f[0], setSelectIndex = _f[1];
+    var _g = react_1.useState([]), listProduct = _g[0], setListProduct = _g[1];
     var dispatch = react_redux_1.useDispatch();
     var client = client_1.useApolloClient();
     react_1.useEffect(function () {
-        if (!index_1.Helper.isNullOrUndefined(listProductCart) &&
-            listProductCart.length > 0) {
-            setListProduct(listProductCart);
+        if (!index_1.Helper.isNullOrUndefined(cart.listProduct) &&
+            cart.listProduct.length > 0) {
+            setListProduct(cart.listProduct);
         }
         else {
             setListProduct([]);
         }
-    }, [listProductCart.length, showBottomSheetCart]);
+    }, [cart.listProduct.length, showBottomSheetCart]);
     var renderProduct = function (data) {
         return (react_1["default"].createElement(react_native_1.TouchableOpacity, { style: [[styles_1.styles.flexDirection, styles_1.styles.viewItem, styles_1.styles.aboveRow]], onPress: function () {
                 updateItemProduct(data.index);
@@ -85,6 +88,7 @@ var BodyCart = function (showBottomSheetCart, setShowBottomSheetCart) {
         setShowBottomSheet(true);
         setChooseProduct((_a = getProduct === null || getProduct === void 0 ? void 0 : getProduct.getProductByCate.find(function (x) { return x.categoryId === listProduct[indexItem].iD_Cate; })) === null || _a === void 0 ? void 0 : _a.listProduct.find(function (x) { return x.productId === listProduct[indexItem].productId; }));
         setAddSelectProduct(listProduct[indexItem]);
+        setSelectIndex(indexItem);
     };
     var deleteItemProduct = function (rowMap, indexItem) {
         var newData = __spreadArrays(listProduct);
@@ -95,11 +99,6 @@ var BodyCart = function (showBottomSheetCart, setShowBottomSheetCart) {
         if (rowMap[indexItem]) {
             rowMap[indexItem].closeRow();
         }
-    };
-    var totalPriceBeforeShip = function () {
-        var total = 0;
-        listProduct.map(function (x) { return (total += x.totalPrice); });
-        return total;
     };
     return (react_1["default"].createElement(react_native_1.View, { style: styles_1.styles.bodyContainer },
         react_1["default"].createElement(react_native_1.View, { style: styles_1.styles.viewBody },
@@ -125,16 +124,16 @@ var BodyCart = function (showBottomSheetCart, setShowBottomSheetCart) {
                 react_1["default"].createElement(react_native_1.View, { style: styles_1.styles.infoUser },
                     react_1["default"].createElement(AppText_1["default"], { text: "H\u1ECD t\u00EAn kh\u00E1ch h\u00E0ng", style: styles_1.styles.txtItem }),
                     react_1["default"].createElement(react_native_1.View, { style: styles_1.styles.spacingTxtInfo }),
-                    react_1["default"].createElement(AppText_1["default"], { text: "S\u1ED1 \u0111i\u1EC7n tho\u1EA1i", style: styles_1.styles.txtItem })),
+                    react_1["default"].createElement(AppText_1["default"], { text: cart.phoneNumber, style: styles_1.styles.txtItem })),
                 react_1["default"].createElement(react_native_1.View, { style: styles_1.styles.spacingInfoUser }),
                 react_1["default"].createElement(react_native_1.View, { style: styles_1.styles.infoUser },
-                    react_1["default"].createElement(AppText_1["default"], { text: "H\u1ECD t\u00EAn kh\u00E1ch h\u00E0ng", style: styles_1.styles.txtItem }),
+                    react_1["default"].createElement(AppText_1["default"], { text: "D\u1EF1 ki\u1EBFn giao h\u00E0ng", style: styles_1.styles.txtItem }),
                     react_1["default"].createElement(react_native_1.View, { style: styles_1.styles.spacingTxtInfo }),
-                    react_1["default"].createElement(AppText_1["default"], { text: "S\u1ED1 \u0111i\u1EC7n tho\u1EA1i", style: styles_1.styles.txtItem })))),
+                    react_1["default"].createElement(AppText_1["default"], { text: "15-30 ph\u00FAt", style: styles_1.styles.txtItem })))),
         react_1["default"].createElement(react_native_1.View, { style: styles_1.styles.viewBody },
             react_1["default"].createElement(react_native_1.View, { style: [styles_1.styles.flexDirection, styles_1.styles.viewTitle] },
                 react_1["default"].createElement(AppText_1["default"], { text: "S\u1EA3n ph\u1EA9m \u0111\u00E3 ch\u1ECDn", textFont: "bold", style: styles_1.styles.txtTitle }),
-                react_1["default"].createElement(react_native_1.TouchableOpacity, { style: styles_1.styles.btnPlus },
+                react_1["default"].createElement(react_native_1.TouchableOpacity, { style: styles_1.styles.btnPlus, onPress: function () { return setShowBottomSheetCart(false); } },
                     react_1["default"].createElement(AppText_1["default"], { text: "+ Th\u00EAm", textFont: "bold", textColor: constants_1.COLORS.PRIMARY_COLOR }))),
             !index_1.Helper.isNullOrUndefined(listProduct) && listProduct.length > 0 && (react_1["default"].createElement(react_native_swipe_list_view_1.SwipeListView, { scrollEnabled: false, data: listProduct, renderItem: renderProduct, renderHiddenItem: renderHandleProduct, disableRightSwipe: true, stopRightSwipe: -150, rightOpenValue: -150, previewRowKey: '0' }))),
         react_1["default"].createElement(react_native_1.View, { style: styles_1.styles.viewBody },
@@ -142,16 +141,16 @@ var BodyCart = function (showBottomSheetCart, setShowBottomSheetCart) {
                 react_1["default"].createElement(AppText_1["default"], { text: "T\u1ED5ng c\u1ED9ng", textFont: "bold", style: styles_1.styles.txtTitle })),
             react_1["default"].createElement(react_native_1.View, { style: [styles_1.styles.flexDirection, styles_1.styles.viewItem] },
                 react_1["default"].createElement(AppText_1["default"], { text: "Th\u00E0nh ti\u1EC1n", style: styles_1.styles.txtItem }),
-                react_1["default"].createElement(AppText_1["default"], { text: index_1.Helper.formatPrice(totalPriceBeforeShip()), style: styles_1.styles.txtItem })),
+                react_1["default"].createElement(AppText_1["default"], { text: index_1.Helper.formatPrice(cart.totalPriceCart), style: styles_1.styles.txtItem })),
             react_1["default"].createElement(react_native_1.View, { style: [styles_1.styles.flexDirection, styles_1.styles.viewItem] },
                 react_1["default"].createElement(AppText_1["default"], { text: "Ph\u00ED giao h\u00E0ng", style: styles_1.styles.txtItem }),
-                react_1["default"].createElement(AppText_1["default"], { text: "18.000\u0111", style: styles_1.styles.txtItem })),
-            react_1["default"].createElement(react_native_1.TouchableOpacity, { style: [styles_1.styles.flexDirection, styles_1.styles.viewItem] },
+                react_1["default"].createElement(AppText_1["default"], { text: index_1.Helper.formatPrice(cart.totalPriceShipCart), style: styles_1.styles.txtItem })),
+            react_1["default"].createElement(react_native_1.TouchableOpacity, { style: [styles_1.styles.flexDirection, styles_1.styles.viewItem], onPress: function () { return setShowBottomSheetPromotion(true); } },
                 react_1["default"].createElement(AppText_1["default"], { text: "Ch\u1ECDn khuy\u1EBFn m\u00E3i", style: styles_1.styles.txtItem }),
                 react_1["default"].createElement(Ionicons_1["default"], { name: "chevron-forward", size: 20 })),
             react_1["default"].createElement(react_native_1.View, { style: [styles_1.styles.flexDirection, styles_1.styles.viewItem] },
                 react_1["default"].createElement(AppText_1["default"], { text: "S\u1ED1 ti\u1EC1n thanh to\u00E1n", textFont: "bold", style: styles_1.styles.txtItem }),
-                react_1["default"].createElement(AppText_1["default"], { text: index_1.Helper.formatPrice(totalPriceBeforeShip() + 18000), textFont: "bold", style: styles_1.styles.txtItem }))),
+                react_1["default"].createElement(AppText_1["default"], { text: index_1.Helper.formatPrice(cart.totalPriceCart + cart.totalPriceShipCart), textFont: "bold", style: styles_1.styles.txtItem }))),
         react_1["default"].createElement(react_native_1.View, { style: [styles_1.styles.viewBody, { paddingBottom: 30 }] },
             react_1["default"].createElement(react_native_1.View, { style: [styles_1.styles.flexDirection, styles_1.styles.viewTitle] },
                 react_1["default"].createElement(AppText_1["default"], { text: "Thanh to\u00E1n", textFont: "bold", style: styles_1.styles.txtTitle })),
@@ -170,7 +169,9 @@ var BodyCart = function (showBottomSheetCart, setShowBottomSheetCart) {
                 chooseProduct: chooseProduct,
                 setAddSelectProduct: setAddSelectProduct,
                 setShowBottomSheet: setShowBottomSheet,
-                updateItem: true
-            }) })));
+                updateItem: true,
+                selectIndex: selectIndex
+            }) }),
+        react_1["default"].createElement(AppDraggaleBottomSheet_1["default"], { showBottomSheet: showBottomSheetPromotion, setShowBottomSheet: setShowBottomSheetPromotion, HeaderBottomSheetComponent: FeaturePromotion_1.HeaderPromotion(showBottomSheetPromotion, setShowBottomSheetPromotion), BodyBottomSheetComponent: FeaturePromotion_1.BodyPromotion() })));
 };
 exports["default"] = BodyCart;

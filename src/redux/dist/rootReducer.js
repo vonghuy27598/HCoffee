@@ -7,6 +7,7 @@ var bannerReducer_1 = require("./reducer/bannerReducer");
 var categoryReducer_1 = require("./reducer/categoryReducer");
 var cartReducer_1 = require("./reducer/cartReducer");
 var locationReducer_1 = require("./reducer/locationReducer");
+var genarateReducer_1 = require("./reducer/genarateReducer");
 var appReducer = redux_1.combineReducers({
     getCategoryMenuReducer: categoryMenuReducer_1.getCategoryMenuReducer,
     getBannerHomeReducer: bannerReducer_1.getBannerHomeReducer,
@@ -16,7 +17,8 @@ var appReducer = redux_1.combineReducers({
     selectOptionBuyReducer: cartReducer_1.selectOptionBuyReducer,
     setCartReducer: cartReducer_1.setCartReducer,
     setHeaderCateName: categoryReducer_1.setHeaderCateName,
-    getLocationUserReducer: locationReducer_1.getLocationUserReducer
+    getLocationUserReducer: locationReducer_1.getLocationUserReducer,
+    genarateReducer: genarateReducer_1.genarateReducer
 });
 var rootReducer = function (state, action) {
     // when a logout action is dispatched it will reset redux state

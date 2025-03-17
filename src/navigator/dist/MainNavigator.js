@@ -44,48 +44,111 @@ var TabNavigator_1 = require("./TabNavigator");
 var geolocation_1 = require("@react-native-community/geolocation");
 var react_redux_1 = require("react-redux");
 var locationAction_1 = require("@redux/action/locationAction");
+var index_1 = require("@common/index");
 var react_native_1 = require("react-native");
-var cartAction_1 = require("@redux/action/cartAction");
+var messaging_1 = require("@react-native-firebase/messaging");
+var react_native_2 = require("@notifee/react-native");
+var NotificationScreen_1 = require("@container/NotificationScreen");
+var LoginScreen_1 = require("@container/LoginScreen");
+var async_storage_1 = require("@react-native-async-storage/async-storage");
+var constants_1 = require("../constants");
+var genarateAction_1 = require("@redux/action/genarateAction");
 var Stack = native_stack_1.createNativeStackNavigator();
 var MainNavigator = function () {
     var dispatch = react_redux_1.useDispatch();
-    var initApp = function () {
-        try {
-            dispatch(cartAction_1.getCart());
-            geolocation_1["default"].getCurrentPosition(function (postion) { return __awaiter(void 0, void 0, void 0, function () {
-                return __generator(this, function (_a) {
-                    switch (_a.label) {
-                        case 0:
-                            console.log('onReady App', postion);
-                            if (!postion.coords) return [3 /*break*/, 2];
-                            return [4 /*yield*/, dispatch(locationAction_1.getLocationUserAction(postion.coords.latitude, postion.coords.longitude))];
-                        case 1:
-                            _a.sent();
-                            _a.label = 2;
-                        case 2:
-                            react_native_bootsplash_1["default"].hide({ fade: true });
-                            return [2 /*return*/];
-                    }
-                });
-            }); }, function (err) {
-                console.log('getCurrentPosition error', err);
-            }, {
-                timeout: 100000,
-                maximumAge: 100000,
-                enableHighAccuracy: true
+    react_1.useEffect(function () {
+        var unsubscribe = messaging_1["default"]().onMessage(function (remoteMessage) { return __awaiter(void 0, void 0, void 0, function () {
+            var _a;
+            return __generator(this, function (_b) {
+                react_native_1.Alert.alert('Hcoffe thông báo', JSON.stringify((_a = remoteMessage.notification) === null || _a === void 0 ? void 0 : _a.body));
+                return [2 /*return*/];
             });
-            // PermissionApp.firstCheckPermissionLocation();
-        }
-        catch (error) {
-            react_native_1.Alert.alert('Lỗi hệ thống', 'HCoffee gặp vấn đề khi khởi tạo ứng dụng');
-            console.log('ERROR INIT APP', error);
-        }
+        }); });
+        return unsubscribe;
+    }, []);
+    var initApp = function () { return __awaiter(void 0, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            try {
+                dispatch(genarateAction_1.genarateApp());
+                onAppBootstrap();
+                geolocation_1["default"].getCurrentPosition(function (postion) { return __awaiter(void 0, void 0, void 0, function () {
+                    return __generator(this, function (_a) {
+                        switch (_a.label) {
+                            case 0:
+                                console.log('onReady App', postion);
+                                if (!postion.coords) return [3 /*break*/, 2];
+                                return [4 /*yield*/, dispatch(locationAction_1.getLocationUserAction(postion.coords.latitude, postion.coords.longitude))];
+                            case 1:
+                                _a.sent();
+                                _a.label = 2;
+                            case 2: return [4 /*yield*/, index_1.PermissionApp.firstCheckPermissionNotification()];
+                            case 3:
+                                _a.sent();
+                                react_native_bootsplash_1["default"].hide({ fade: true });
+                                return [2 /*return*/];
+                        }
+                    });
+                }); }, function (err) {
+                    console.log('getCurrentPosition error', err);
+                }, {
+                    timeout: 100000,
+                    maximumAge: 100000,
+                    enableHighAccuracy: true
+                });
+                // PermissionApp.firstCheckPermissionLocation();
+            }
+            catch (error) {
+                react_native_1.Alert.alert('Lỗi hệ thống', 'HCoffee gặp vấn đề khi khởi tạo ứng dụng');
+                console.log('ERROR INIT APP', error);
+            }
+            return [2 /*return*/];
+        });
+    }); };
+    var onAppBootstrap = function () { return __awaiter(void 0, void 0, void 0, function () {
+        var token;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: 
+                // Register the device with FCM
+                return [4 /*yield*/, messaging_1["default"]().registerDeviceForRemoteMessages()];
+                case 1:
+                    // Register the device with FCM
+                    _a.sent();
+                    return [4 /*yield*/, messaging_1["default"]().getToken()];
+                case 2:
+                    token = _a.sent();
+                    console.log('TOKEN NOTIFICATION', token);
+                    // Check login user
+                    // Save token
+                    return [4 /*yield*/, async_storage_1["default"].setItem(constants_1.CONSTANTS_STORAGE.TOKEN_NOTIFY, token)];
+                case 3:
+                    // Check login user
+                    // Save token
+                    _a.sent();
+                    return [2 /*return*/];
+            }
+        });
+    }); };
+    var onMessageReceived = function (message) {
+        var _a, _b;
+        react_native_2["default"].displayNotification({
+            title: (_a = message.notification) === null || _a === void 0 ? void 0 : _a.title,
+            body: (_b = message.notification) === null || _b === void 0 ? void 0 : _b.body
+        });
+        console.log('onMessageReceived', message.notification);
     };
+    messaging_1["default"]().onMessage(onMessageReceived);
+    messaging_1["default"]().setBackgroundMessageHandler(onMessageReceived);
     return (react_1["default"].createElement(native_1.NavigationContainer, { onReady: function () {
             console.log('onReady App');
             initApp();
         } },
         react_1["default"].createElement(Stack.Navigator, { initialRouteName: "Home", screenOptions: { headerShown: false } },
-            react_1["default"].createElement(Stack.Screen, { name: "Home", component: TabNavigator_1["default"] }))));
+            react_1["default"].createElement(Stack.Screen, { name: "Home", component: TabNavigator_1["default"] }),
+            react_1["default"].createElement(Stack.Screen, { name: "Notification", component: NotificationScreen_1["default"] }),
+            react_1["default"].createElement(Stack.Screen, { name: "Login", component: LoginScreen_1["default"], options: {
+                    animationTypeForReplace: 'push',
+                    animation: 'slide_from_bottom'
+                } }))));
 };
 exports["default"] = MainNavigator;

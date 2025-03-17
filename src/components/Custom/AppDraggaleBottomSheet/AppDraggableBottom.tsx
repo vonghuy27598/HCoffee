@@ -80,7 +80,9 @@ const AppDraggableBottom = ({
               style={[
                 maxHeightBottomSheet === '100%'
                   ? styles.bodyContent100
-                  : styles.bodyContent70,
+                  : FooterBottoomSheetComponent
+                  ? styles.bodyContent70
+                  : styles.bodyContent100,
                 bottomBodyContentAnimation,
               ]}>
               <ScrollView style={{flex: 1}}>
@@ -88,9 +90,11 @@ const AppDraggableBottom = ({
               </ScrollView>
             </Animated.View>
           </Animated.View>
-          <Animated.View style={[styles.footerArea, bottomFooterAnimation]}>
-            <FooterBottomSheet />
-          </Animated.View>
+          {FooterBottoomSheetComponent && (
+            <Animated.View style={[styles.footerArea, bottomFooterAnimation]}>
+              <FooterBottomSheet />
+            </Animated.View>
+          )}
         </View>
       </Portal>
     )
@@ -153,19 +157,18 @@ const styles = StyleSheet.create({
     height: BOTTOM_HEADER_HEIGHT_100,
     justifyContent: 'center',
     alignItems: 'center',
-    paddingHorizontal: 10,
     borderBottomColor: COLORS.LIGHT_GRAY_COLOR,
     borderBottomWidth: 0.5,
   },
   bodyContent70: {
     width: BOTTOM_SHEET_WIDTH,
     height: BOTTOM_BODY_HEIGHT_70,
-    backgroundColor: COLORS.GRAY_e3e3e3_COLOR,
+    backgroundColor: COLORS.GRAY_efefef_COLOR,
     paddingBottom: BOTTOM_FOOTER_HEIGHT,
   },
   bodyContent100: {
     flex: 1,
-    backgroundColor: COLORS.GRAY_e3e3e3_COLOR,
+    backgroundColor: COLORS.GRAY_efefef_COLOR,
     paddingBottom: BOTTOM_FOOTER_HEIGHT,
   },
   footerArea: {
@@ -175,7 +178,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     position: 'absolute',
     backgroundColor: COLORS.WHITE_COLOR,
-    bottom: 0,
+    bottom: 22,
     left: 0,
     right: 0,
     zIndex: 9999,

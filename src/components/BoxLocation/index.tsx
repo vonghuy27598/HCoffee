@@ -34,6 +34,7 @@ const BoxLocation = () => {
   const locationCurrent = useSelector(
     (state: RootState) => state.getLocationUserReducer.items,
   );
+  const cart = useSelector((state: RootState) => state.setCartReducer);
   const getLocation = async () => {
     if (await requestPermissionLocation()) {
       Geolocation.getCurrentPosition(
@@ -97,29 +98,34 @@ const BoxLocation = () => {
           numberOfLines={1}
         />
       </View>
-      <TouchableOpacity
-        style={[styles.flexDirectionRow, styles.btnGoCart]}
-        onPress={() =>
-          setShowBottomSheet
-            ? setShowBottomSheet(true)
-            : setShowBottomSheetOrder(true)
-        }>
-        <View style={styles.boxQuantity}>
-          <AppText
-            text="5"
-            textColor={COLORS.PRIMARY_COLOR}
-            textSize={13}
-            textFont="bold"
-          />
-        </View>
-        <AppText
-          text="255.000đ"
-          textColor={COLORS.WHITE_COLOR}
-          textFont="bold"
-          style={styles.totalPrice}
-          textSize={15}
-        />
-      </TouchableOpacity>
+      {!Helper.isNullOrUndefined(cart.listProduct) &&
+        cart.listProduct.length > 0 && (
+          <TouchableOpacity
+            style={[styles.flexDirectionRow, styles.btnGoCart]}
+            onPress={() =>
+              setShowBottomSheet
+                ? setShowBottomSheet(true)
+                : setShowBottomSheetOrder(true)
+            }>
+            <View style={styles.boxQuantity}>
+              <AppText
+                text={`${cart.totalQuantityCart}`}
+                textColor={COLORS.PRIMARY_COLOR}
+                textSize={13}
+                textFont="bold"
+              />
+            </View>
+            <AppText
+              text={Helper.formatPrice(
+                cart.totalPriceCart + cart.totalPriceShipCart,
+              )}
+              textColor={COLORS.WHITE_COLOR}
+              textFont="bold"
+              style={styles.totalPrice}
+              textSize={15}
+            />
+          </TouchableOpacity>
+        )}
     </AnimatedTouchableOpacity>
   );
 };

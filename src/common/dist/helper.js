@@ -1,6 +1,6 @@
 "use strict";
 exports.__esModule = true;
-exports.getCloser = exports.formatWrapLineSpace = exports.formatSize = exports.getPriceCheckTopping = exports.getPriceSize = exports.formatPrice = exports.createAction = exports.isObjectEqual = exports.isArrayEquals = exports.getFirstSize = exports.checkLessThanOneSize = exports.checkZeroPrice = exports.isNullOrUndefined = void 0;
+exports.getCloser = exports.formatWrapLineSpace = exports.formatSize = exports.getPriceCheckTopping = exports.getPriceSize = exports.formatPrice = exports.createAction = exports.isObjectEqual = exports.isArrayEquals = exports.getFirstSize = exports.checkLessThanOneSize = exports.checkZeroPrice = exports.isPhoneNumber = exports.sumArrayKey = exports.isArray = exports.isJSON = exports.isNullOrUndefined = void 0;
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 exports.isNullOrUndefined = function (value) {
     if (value === null)
@@ -9,6 +9,30 @@ exports.isNullOrUndefined = function (value) {
         return true;
     if (value === '')
         return true;
+    return false;
+};
+exports.isJSON = function (value) {
+    try {
+        if (!exports.isNullOrUndefined(value)) {
+            return JSON.parse(value) && !!value;
+        }
+        return false;
+    }
+    catch (e) {
+        return false;
+    }
+};
+exports.isArray = function (value) {
+    return value !== undefined && value !== null && value.constructor === Array;
+};
+exports.sumArrayKey = function (arr, key) {
+    return arr.reduce(function (a, b) { return a + (b[key] || 0); }, 0);
+};
+exports.isPhoneNumber = function (value) {
+    var value_regex = /((09|03|07|08|05)+([0-9]{8})\b)/g;
+    if (value_regex.test(value)) {
+        return true;
+    }
     return false;
 };
 exports.checkZeroPrice = function (value) {
